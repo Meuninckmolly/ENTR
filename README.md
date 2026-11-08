@@ -1,18 +1,24 @@
 # Neil Ratanji — Built, Not Rushed
 
-A single-page, scroll-driven educational site built with HTML, CSS, and Three.js.
+A self-contained educational scrollytelling website based on the supplied interview transcript. The page uses Three.js for a fixed, scroll-responsive 3D scene.
 
-## Run it
-- Open `index.html` with a local development server (for example, VS Code Live Server).
-- Three.js is loaded from jsDelivr, so the 3D scene requires an internet connection.
-- The article content remains readable if the 3D library fails to load.
+## Run it locally
 
-## Easy adjustments
-- **Colors and type:** edit the `:root` variables near the top of `index.html`.
-- **Story content:** edit the labeled `CHAPTER` sections in the HTML.
-- **3D hotel:** find `3D SCENE — easy-to-adjust controls` in the JavaScript. `COLORS`, the `addBox()` calls, and `satelliteSpecs` control the appearance.
-- **Scroll scenes:** change each section's `data-scene="0"` through `data-scene="5"` and edit the `targets` array near the bottom of the script.
-- **Quiz:** edit the `data-answer` buttons and the feedback text in `QUICK KNOWLEDGE CHECK`.
+1. Unzip the folder.
+2. Open it in VS Code.
+3. Start `index.html` with the Live Server extension (or another local web server). A local server is recommended because Three.js is imported as an ES module from a CDN.
+4. Keep an internet connection available for the Three.js CDN import.
 
-## Content note
-The educational narrative is based on the supplied interview transcript. The hotel model is an original abstract illustration, not a real property rendering. The site avoids asserting current business details not established by the interview.
+## Easy customization
+
+- **Colors:** edit `:root` in the CSS and the `COLORS` object in the JavaScript.
+- **Text:** edit the chapter sections in the HTML.
+- **Text readability:** `.story-section .copy` controls the solid paper panel, padding, and shadow.
+- **Scroll scenes:** each chapter uses `data-scene="0"` through `data-scene="5"`.
+- **3D visuals:** the JavaScript sections labeled `Opportunity`, `Service`, `Risk`, and `People` create the extra scene layers that fade and morph into view as the story progresses. Adjust their geometry, colors, or positions there.
+- **Camera and hotel movement:** edit the `targets` array inside `animate()`.
+- **Quiz:** edit the `data-answer` buttons and the feedback text in the final JavaScript section.
+
+## Notes
+
+The hotel and abstract 3D elements are illustrative, not depictions of specific properties. The educational narrative is based on the supplied interview transcript and does not claim to be a complete or current company profile. Text remains readable if the Three.js CDN is unavailable. The page respects the user's reduced-motion preference.

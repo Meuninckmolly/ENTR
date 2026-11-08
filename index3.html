@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neil Ratanji — Built, Not Rushed</title>
+<meta name="description" content="An interactive, animated, scroll-driven story of entrepreneur Neil Ratanji, told chronologically from a student interview.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f2e9; --ink:#172a24; --accent:#ef7952;
+  --card:color-mix(in srgb,var(--ink) 7%,transparent);
+  --soft:color-mix(in srgb,var(--ink) 55%,var(--bg));
+  --disp:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --ease:cubic-bezier(.2,.9,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--disp);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul{margin-top:0}
+p{line-height:1.65}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* fixed layers */
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.glow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;z-index:1;pointer-events:none;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent) 28%,transparent),transparent 65%);mix-blend-mode:normal;will-change:transform}
+.progress{position:fixed;top:0;left:0;height:5px;width:0;background:var(--accent);z-index:50}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:18px 4vw;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.topbar a{text-decoration:none;color:var(--ink)}
+.hud{position:fixed;left:4vw;bottom:22px;z-index:40;display:flex;align-items:center;gap:12px;background:var(--ink);color:var(--bg);padding:10px 18px 10px 12px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.06em;box-shadow:4px 4px 0 var(--accent)}
+.hud i{width:10px;height:10px;border-radius:50%;background:var(--accent);animation:blink 1.4s infinite}
+.hud b{display:inline-block;min-width:7ch}
+.hud.flip b{animation:hudflip .5s var(--ease)}
+@keyframes hudflip{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
+@keyframes blink{50%{opacity:.25}}
+.rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:11px}
+.rail button{all:unset;cursor:pointer;width:12px;height:12px;border-radius:50%;border:2px solid var(--ink);position:relative;transition:transform .3s,background .3s}
+.rail button.on{background:var(--accent);transform:scale(1.5);border-color:var(--accent)}
+.rail button span{position:absolute;right:24px;top:50%;transform:translateY(-50%) translateX(8px);white-space:nowrap;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:5px 10px;border-radius:99px;opacity:0;pointer-events:none;transition:.25s}
+.rail button:hover span,.rail button:focus-visible span{opacity:1;transform:translateY(-50%)}
+main{position:relative;z-index:2}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px 6vw 60px;position:relative;overflow:hidden}
+.hero .kicker{margin-bottom:22px}
+.hero h1{font:800 clamp(3.6rem,14vw,13rem)/.82 var(--disp);letter-spacing:-.06em;margin-bottom:34px}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .l{display:inline-block;transform:translateY(110%) rotate(10deg);animation:letterIn .9s var(--ease) forwards;animation-delay:calc(var(--i)*45ms + .25s)}
+.hero h1 .line:nth-child(2) .l{color:var(--accent);font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.04em}
+@keyframes letterIn{to{transform:none}}
+.hero .lede{font-size:clamp(1.05rem,1.8vw,1.45rem);max-width:46ch;opacity:0;animation:fadeUp 1s 1.4s var(--ease) forwards}
+.hero .cue{margin-top:36px;display:inline-flex;align-items:center;gap:12px;font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:0;animation:fadeUp 1s 1.8s var(--ease) forwards}
+.hero .cue i{width:28px;height:46px;border:2px solid var(--ink);border-radius:20px;position:relative}
+.hero .cue i::after{content:"";position:absolute;left:50%;top:8px;width:6px;height:10px;margin-left:-3px;background:var(--accent);border-radius:4px;animation:wheel 1.6s infinite}
+@keyframes wheel{0%{transform:translateY(0);opacity:1}100%{transform:translateY(18px);opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.9;animation:float 9s ease-in-out infinite;will-change:transform}
+.blob.a{width:22vw;height:22vw;right:7vw;top:16vh;background:var(--accent);animation-delay:-2s}
+.blob.b{width:11vw;height:11vw;right:26vw;bottom:10vh;background:var(--ink);border-radius:30%}
+.blob.c{width:7vw;height:7vw;right:4vw;bottom:22vh;border:6px solid var(--ink);background:transparent;animation-duration:6s}
+@keyframes float{50%{transform:translateY(-34px) rotate(14deg)}}
+.marquee{position:relative;z-index:2;overflow:hidden;background:var(--ink);color:var(--bg);padding:16px 0;transform:rotate(-1.4deg);margin:0 -2vw 60px;border-block:3px solid var(--accent)}
+.marquee div{display:flex;width:max-content;animation:marq 26s linear infinite;font:800 1.5rem var(--disp);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.marquee span{padding:0 26px}.marquee span:nth-child(even){color:var(--accent)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* chapters */
+.kicker{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:34px;height:3px;background:var(--accent);display:block}
+.chap{min-height:100svh;padding:110px 6vw;position:relative;display:flex;align-items:center}
+.chap .num{position:absolute;top:70px;left:3vw;font:800 clamp(9rem,26vw,24rem)/.8 var(--disp);letter-spacing:-.08em;color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--ink) 16%,transparent);pointer-events:none;user-select:none;transition:transform .2s linear}
+.wrap{position:relative;display:grid;grid-template-columns:1.02fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;width:100%;max-width:1280px;margin:0 auto}
+.chap.flip .wrap{grid-template-columns:1fr 1.02fr}
+.chap.flip .text{order:2}
+h2{font:800 clamp(2.3rem,5vw,4.9rem)/.96 var(--disp);letter-spacing:-.05em;margin-bottom:22px}
+h2 em{font:italic 400 1.08em var(--serif);color:var(--accent);letter-spacing:-.03em}
+.text p{font-size:1.06rem;max-width:52ch}
+.quote{font:italic 400 clamp(1.5rem,2.6vw,2.3rem)/1.12 var(--serif);border-left:4px solid var(--accent);padding-left:18px;margin:26px 0 0;max-width:30ch}
+.quote small{display:block;margin-top:10px;font:800 10px var(--disp);font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+[data-split] .w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .04em .12em}
+[data-split] .w>span{display:inline-block;transform:translateY(108%) rotate(4deg);transition:transform .85s var(--ease);transition-delay:calc(var(--i)*70ms)}
+[data-split].in .w>span{transform:none}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+
+/* viz card */
+.viz{background:color-mix(in srgb,var(--bg) 82%,#fff);border:3px solid var(--ink);border-radius:26px;padding:24px;box-shadow:10px 10px 0 var(--accent);transition:transform .25s ease-out;transform-style:preserve-3d;position:relative}
+.viz h4{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:16px;display:flex;justify-content:space-between;gap:10px}
+.viz h4 span{color:var(--soft)}
+.btn{appearance:none;border:0;cursor:pointer;background:var(--ink);color:var(--bg);font-weight:800;font-size:13px;letter-spacing:.04em;padding:13px 22px;border-radius:99px;transition:transform .2s,background .2s,box-shadow .2s;box-shadow:3px 3px 0 var(--accent)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--accent)}
+.btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--accent)}
+.btn[disabled]{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+.status{min-height:3em;font-size:.95rem;font-weight:700;margin:16px 0 0;line-height:1.45}
+.fine{font-size:.78rem;color:var(--soft);margin:14px 0 0;line-height:1.5}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* dropdown */
+.deep{margin-top:26px;border:2px solid var(--ink);border-radius:20px;background:var(--card);overflow:hidden;max-width:560px}
+.deep-btn{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;cursor:pointer;font-weight:800;font-size:.95rem;letter-spacing:.02em}
+.deep-btn:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.deep-btn .pm{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:20px;line-height:1;transition:transform .5s var(--ease),background .3s}
+.deep-btn:hover .pm{background:var(--accent)}
+.deep.open .pm{transform:rotate(135deg)}
+.deep-panel{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .65s var(--ease),visibility 0s .65s}
+.deep.open .deep-panel{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .65s var(--ease),visibility 0s}
+.deep-inner{overflow:hidden;min-height:0}
+.deep-body{padding:2px 20px 22px}
+.concept{display:inline-block;background:var(--accent);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:99px;margin-bottom:14px}
+.pts{padding:0;list-style:none;margin-bottom:14px}
+.pts li{position:relative;padding:10px 0 10px 28px;border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent);font-size:.95rem;line-height:1.5}
+.pts li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:800}
+.deep.open .pts li,.deep.open .reflect,.deep.open .concept{animation:pop .6s var(--ease) both;animation-delay:calc(var(--i,0)*90ms + .25s)}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.reflect{background:var(--ink);color:var(--bg);border-radius:14px;padding:14px 16px;font-size:.92rem;line-height:1.5}
+.reflect b{color:var(--accent);display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px}
+
+/* c1 chart */
+.chart{width:100%;height:auto;display:block;color:var(--ink)}
+.chart text{fill:currentColor;font:800 10.5px var(--disp);letter-spacing:.04em}
+.draw{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.go .draw{stroke-dashoffset:0;transition:stroke-dashoffset 2.2s ease-in-out}
+.go .draw.p2{transition-delay:.7s;transition-duration:2.6s}
+.chart .dot,.chart .lab{opacity:0}
+.go .dot,.go .lab{opacity:1;transition:opacity .5s 3.1s}
+.chart .pulse{transform-origin:378px 14px;animation:pulse 1.4s infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:1}100%{transform:scale(2.8);opacity:0}}
+
+/* c2 hotels */
+.hotels{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.hotel{opacity:0;transform:scale(.5) translateY(20px);transition:all .7s var(--ease);text-align:center;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.hotel.show{opacity:1;transform:none}
+.hotel .bld{--c:#8d8577;height:96px;border-radius:10px 10px 0 0;margin-bottom:8px;background-color:var(--c);
+  background-image:repeating-linear-gradient(0deg,var(--c) 0 8px,transparent 8px 20px),repeating-linear-gradient(90deg,transparent 0 10px,rgba(255,255,255,.65) 10px 18px);
+  transition:background-color .8s,filter .8s,box-shadow .8s;filter:grayscale(.9) sepia(.3)}
+.hotel.fresh .bld{--c:var(--accent);filter:none;box-shadow:0 0 0 3px var(--ink),0 0 30px color-mix(in srgb,var(--accent) 70%,transparent)}
+.hotel.fresh.show{animation:bounce .8s var(--ease)}
+@keyframes bounce{0%{transform:scale(.8)}60%{transform:scale(1.08)}100%{transform:none}}
+
+/* c3 scene */
+.scene{position:relative;aspect-ratio:5/3;border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.mtn{opacity:var(--m,.1);transition:opacity .2s}
+.blinder{position:absolute;top:0;bottom:0;width:var(--bw,40%);background:var(--ink);transition:width .2s}
+.blinder.l{left:0;border-radius:0 60% 60% 0/0 50% 50% 0}
+.blinder.r{right:0;border-radius:60% 0 0 60%/50% 0 0 50%}
+input[type=range]{width:100%;margin:16px 0 0;accent-color:var(--accent);height:28px}
+
+/* c4 listen */
+.wave{display:flex;align-items:center;gap:5px;height:90px;justify-content:center}
+.wave i{display:block;width:8px;height:8px;border-radius:5px;background:var(--ink)}
+.hold{width:100%;margin:14px 0;padding:18px;font-size:15px;user-select:none;touch-action:none}
+.meter{height:12px;border-radius:99px;background:color-mix(in srgb,var(--ink) 14%,transparent);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--accent)}
+.chips{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.chips li{padding:11px 14px;border-radius:12px;border:2px dashed color-mix(in srgb,var(--ink) 35%,transparent);font-size:.9rem;font-weight:700;opacity:.35;transition:all .5s var(--ease)}
+.chips li.lit{opacity:1;border:2px solid var(--ink);background:var(--accent);color:var(--ink);transform:translateX(6px)}
+
+/* c5 staff */
+.staff{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.person{aspect-ratio:1;position:relative;transition:all .6s var(--ease)}
+.person::before{content:"";position:absolute;left:30%;top:6%;width:40%;height:34%;border-radius:50%;background:var(--ink)}
+.person::after{content:"";position:absolute;left:14%;top:44%;width:72%;height:50%;border-radius:40% 40% 8px 8px;background:var(--ink)}
+.person.star::before,.person.star::after{background:var(--accent)}
+.work .person:not(.star){opacity:.25;transform:scale(.85)}
+.work .person.star{transform:scale(1.18);filter:drop-shadow(0 0 10px var(--accent));animation:wob 1.2s ease-in-out infinite}
+@keyframes wob{50%{transform:scale(1.18) rotate(-6deg)}}
+.stack{display:flex;height:44px;border-radius:12px;overflow:hidden;border:2px solid var(--ink)}
+.stack .a{background:var(--accent);width:20%;transition:width 1.1s var(--ease);display:grid;place-items:center;font-weight:800;overflow:hidden;white-space:nowrap}
+.stack .b{flex:1;display:grid;place-items:center;font-weight:800;background:color-mix(in srgb,var(--ink) 12%,transparent);overflow:hidden;white-space:nowrap}
+.work .stack .a{width:80%}
+
+/* c6 weeks */
+.weeks{display:grid;grid-template-columns:repeat(22,1fr);gap:4px;margin:6px 0 16px}
+.weeks i{height:34px;border-radius:5px;background:color-mix(in srgb,var(--ink) 14%,transparent);transition:background .25s,transform .25s}
+.weeks i.on{background:var(--accent);transform:scaleY(1.2)}
+.bubble{min-height:62px;background:var(--ink);color:var(--bg);border-radius:16px;padding:14px 16px;font-weight:700;font-size:.95rem;line-height:1.4;position:relative;margin-bottom:16px}
+.rate{font:800 3rem/1 var(--disp);letter-spacing:-.05em}.rate small{font-size:.9rem;letter-spacing:0}
+.stamp{display:inline-block;border:4px solid var(--accent);color:var(--accent);font-weight:800;letter-spacing:.16em;padding:6px 14px;border-radius:8px;transform:rotate(-8deg) scale(2.2);opacity:0;margin-left:12px}
+.stamp.on{animation:stampIn .5s var(--ease) forwards}
+@keyframes stampIn{to{opacity:1;transform:rotate(-8deg) scale(1)}}
+
+/* c7 guests */
+.seg{display:flex;background:color-mix(in srgb,var(--ink) 10%,transparent);border-radius:99px;padding:4px;margin-bottom:18px}
+.seg button{all:unset;cursor:pointer;flex:1;text-align:center;padding:11px 8px;border-radius:99px;font-weight:800;font-size:13px;transition:all .3s}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible{outline:3px solid var(--accent)}
+.guest{text-align:center;min-height:250px}
+.guest .ico{font-size:4.2rem;display:inline-block;animation:float 4s ease-in-out infinite}
+.guest h5{font-size:1.4rem;margin:6px 0 8px;letter-spacing:-.03em}
+.guest p{margin:0 auto 10px;font-size:.95rem;max-width:34ch}
+.guest.swap>*{animation:pop .5s var(--ease) both}
+.tag{display:inline-block;background:var(--accent);color:var(--ink);padding:5px 12px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+
+/* c8 steps */
+.steps{display:flex;justify-content:space-between;position:relative;margin:4px 0 22px}
+.steps::before{content:"";position:absolute;left:16px;right:16px;top:16px;height:4px;background:color-mix(in srgb,var(--ink) 15%,transparent)}
+.steps .fill{position:absolute;left:16px;top:16px;height:4px;background:var(--accent);width:0;transition:width .8s var(--ease)}
+.steps button{all:unset;cursor:pointer;position:relative;z-index:1;width:34px;height:34px;border-radius:50%;background:var(--bg);border:3px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:13px;transition:all .4s var(--ease)}
+.steps button.on{background:var(--accent);transform:scale(1.25)}
+.steps button.done{background:var(--ink);color:var(--bg)}
+.steps button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.stepcard{min-height:150px}
+.stepcard h5{font-size:1.5rem;letter-spacing:-.04em;margin:0 0 8px}
+.stepcard p{font-size:.95rem;margin:0}
+.stepcard.swap>*{animation:pop .5s var(--ease) both}
+.bank{margin-top:14px;display:none;align-items:center;gap:10px;background:#b8362a;color:#fff;border-radius:12px;padding:11px 14px;font-weight:800;font-size:.85rem}
+.bank.show{display:flex;animation:shake .6s}
+.bank i{width:12px;height:12px;border-radius:50%;background:#fff;animation:blink .8s infinite}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* c9 cook */
+.lanes{display:grid;gap:14px}
+.lane{border:2px solid var(--ink);border-radius:16px;padding:14px;position:relative;overflow:hidden}
+.lane b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.lane .bar{height:14px;border-radius:99px;background:color-mix(in srgb,var(--ink) 14%,transparent);margin:10px 0 8px;overflow:hidden}
+.lane .bar i{display:block;height:100%;width:0;background:var(--accent)}
+.lane#mw.run .bar i{width:100%;transition:width 1s linear}
+.lane#sm.run .bar i{width:100%;transition:width 7s linear;background:var(--ink)}
+.lane .msg{font-size:.9rem;font-weight:700;min-height:1.4em}
+.lane .big{position:absolute;right:14px;top:8px;font-size:2.2rem}
+.lane#mw.boom{animation:shake .6s;background:color-mix(in srgb,#b8362a 25%,transparent)}
+.lane#mw.boom .big{animation:boom .6s var(--ease)}
+@keyframes boom{from{transform:scale(.3) rotate(-30deg)}to{transform:none}}
+.smoke{position:absolute;right:30px;bottom:50px;pointer-events:none}
+.smoke i{position:absolute;width:14px;height:14px;border-radius:50%;background:color-mix(in srgb,var(--ink) 40%,transparent);opacity:0}
+.lane#sm.run .smoke i{animation:puff 2.4s infinite}
+.smoke i:nth-child(2){animation-delay:.8s!important;left:14px}.smoke i:nth-child(3){animation-delay:1.6s!important;left:-12px}
+@keyframes puff{0%{transform:translateY(0) scale(.4);opacity:.7}100%{transform:translateY(-50px) scale(2.2);opacity:0}}
+.deal{margin-top:16px;border:2px dashed var(--ink);border-radius:14px;padding:14px 16px;font-weight:700;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:transform .9s var(--ease),opacity .9s}
+.deal.gone{transform:translateX(130%) rotate(18deg);opacity:0}
+
+/* c10 */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;text-align:center}
+.nums div{border:2px solid var(--ink);border-radius:16px;padding:16px 6px}
+.nums b{display:block;font:800 clamp(2rem,4.2vw,3.2rem)/1 var(--disp);letter-spacing:-.05em;color:var(--accent)}
+.nums span{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.mot{display:flex;flex-wrap:wrap;gap:8px}
+.mot button{all:unset;cursor:pointer;border:2px solid var(--ink);border-radius:99px;padding:9px 15px;font-weight:800;font-size:13px;transition:all .25s var(--ease)}
+.mot button:hover{transform:translateY(-3px) rotate(-2deg);background:var(--accent)}
+.mot button.on{background:var(--ink);color:var(--bg)}
+.mot button:focus-visible{outline:3px solid var(--accent)}
+
+/* finale */
+.finale{position:relative;z-index:2;padding:120px 6vw 80px}
+.finale .inner{max-width:1100px;margin:0 auto}
+.flips{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px 0 60px}
+.flipc{all:unset;cursor:pointer;height:150px;perspective:900px;display:block}
+.flipc:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:20px}
+.fi{position:relative;width:100%;height:100%;transition:transform .7s var(--ease);transform-style:preserve-3d}
+.flipc.flipped .fi{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid var(--ink);border-radius:20px;display:flex;flex-direction:column;justify-content:center;padding:18px;box-shadow:6px 6px 0 var(--accent);background:var(--bg)}
+.face.back{transform:rotateY(180deg);background:var(--ink);color:var(--bg);font-weight:700;line-height:1.4;font-size:.95rem}
+.face .n{font:800 11px var(--disp);letter-spacing:.16em;color:var(--accent)}
+.face h3{font:800 1.55rem/1 var(--disp);letter-spacing:-.04em;margin:8px 0 0}
+.quiz{background:var(--ink);color:var(--bg);border-radius:30px;padding:clamp(24px,4vw,48px);position:relative;overflow:hidden;box-shadow:10px 10px 0 var(--accent)}
+.quiz .kicker{color:var(--accent)}
+.quiz h3{font:800 clamp(1.4rem,2.6vw,2.2rem)/1.1 var(--disp);letter-spacing:-.04em;margin-bottom:22px}
+.opts{display:grid;gap:10px}
+.opts button{all:unset;cursor:pointer;background:color-mix(in srgb,var(--bg) 12%,transparent);border:2px solid color-mix(in srgb,var(--bg) 30%,transparent);padding:14px 18px;border-radius:14px;font-weight:700;transition:all .25s var(--ease)}
+.opts button:hover:not([disabled]){transform:translateX(8px);border-color:var(--accent)}
+.opts button:focus-visible{outline:3px solid var(--accent)}
+.opts button.right{background:#2f9e6b;border-color:#2f9e6b;color:#fff}
+.opts button.wrong{background:#b8362a;border-color:#b8362a;color:#fff;animation:shake .5s}
+.qfb{min-height:3.2em;margin:16px 0 0;font-size:.95rem;color:var(--bg)}
+.qmeta{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.qdots{display:flex;gap:6px}.qdots i{width:26px;height:6px;border-radius:4px;background:color-mix(in srgb,var(--bg) 25%,transparent)}.qdots i.on{background:var(--accent)}
+.quiz .btn{background:var(--accent);color:var(--ink);box-shadow:3px 3px 0 var(--bg)}
+.confetti{position:fixed;top:-20px;width:10px;height:16px;z-index:100;pointer-events:none;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+footer{position:relative;z-index:2;padding:50px 6vw 100px;text-align:center}
+footer p{margin:6px auto;font-size:.85rem;color:var(--soft);max-width:70ch}
+footer a{color:var(--ink);font-weight:800}
+
+@media(max-width:900px){
+  .rail{display:none}
+  .wrap,.chap.flip .wrap{grid-template-columns:1fr}
+  .chap.flip .text{order:0}
+  .chap{padding:100px 6vw 80px}
+  .chap .num{font-size:9rem;top:50px}
+  .flips{grid-template-columns:1fr 1fr}
+  .hud{left:50%;transform:translateX(-50%);bottom:14px}
+  .blob.a{width:44vw;height:44vw;top:12vh}
+  .weeks{grid-template-columns:repeat(11,1fr)}
+}
+@media(max-width:560px){.flips{grid-template-columns:1fr}.nums{grid-template-columns:1fr 1fr 1fr}.topbar a:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .hero h1 .l{transform:none}
+  .rv,[data-split] .w>span{opacity:1;transform:none}
+  .glow{display:none}
+}
+.seg button,.steps button,.mot button{pointer-events:none}
+.seg button:hover,.mot button:hover{transform:none}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="glow" id="glow" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a href="#top">Field Notes / Entrepreneurship</a>
+  <a href="#finale">Skip to the quiz ↘</a>
+</header>
+<nav class="rail" id="rail" aria-label="Story chapters"></nav>
+<div class="hud" id="hud" aria-hidden="true"><i></i><b id="hudWhen">Intro</b><span id="hudLabel">Scroll to begin</span></div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="top" data-theme="#f6f2e9,#172a24,#ef7952" data-when="Intro" data-label="Scroll to begin" data-rail="Start">
+    <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+    <div class="kicker">A founder's field notes · From a student interview</div>
+    <h1 id="heroTitle" data-text="Built,|not rushed." aria-label="Built, not rushed.">Built, not rushed.</h1>
+    <p class="lede">Ten chapters. One hotel entrepreneur. Scroll through Neil Ratanji's story in the order he lived it, and watch the skyline grow behind you.</p>
+    <div class="cue"><i></i>Scroll · tap · play</div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div>
+    <span>Ownership</span><span>The gap</span><span>Humility</span><span>People</span><span>Service</span><span>Risk</span><span>Slow &amp; wise</span><span>Freedom</span>
+    <span>Ownership</span><span>The gap</span><span>Humility</span><span>People</span><span>Service</span><span>Risk</span><span>Slow &amp; wise</span><span>Freedom</span>
+  </div></div>
+
+  <!-- 01 -->
+  <section class="chap" id="c1" data-theme="#f6f2e9,#172a24,#ef7952" data-when="Age 23" data-label="The detour" data-rail="The detour">
+    <div class="num" aria-hidden="true">01</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">01 · Age 23</div>
+        <h2 data-split>A detour with no ceiling.</h2>
+        <p class="rv">After graduating from Baylor, Neil had a job lined up at IBM. Before it started he had about six months to fill, so he began working alongside his father and figuring out the hotel business. He never took the IBM job.</p>
+        <p class="rv" style="--d:.1s">What hooked him: no limit, no ceiling, just potential. Work hard, and you get to keep all of it.</p>
+        <blockquote class="quote rv" style="--d:.2s">“Whatever you get to create, and whatever you get to do, it's yours.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Ownership &amp; upside</span>
+            <ul class="pts">
+              <li style="--i:1">Neil joked that he “was told to do this,” then laughed it off and gave the real answer: the thrill of unlimited potential.</li>
+              <li style="--i:2">He's candid that at 23 he wasn't thinking the way he does now at 42. It “wasn't nothing glorious.”</li>
+              <li style="--i:3">A salary can be stable, but it is capped by the role. Ownership trades that stability for upside, and the responsibility that comes with it.</li>
+              <li style="--i:4">His line: no one can take what you create from you “unless you give it to somebody.”</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>If there were truly no ceiling, what would you be willing to build, and what would you be willing to give up for it?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Job vs. ownership <span>Illustrative</span></h4>
+        <div id="ceil">
+          <svg class="chart" viewBox="0 0 400 250" role="img" aria-label="Chart: a job's upside flattens at a ceiling while ownership keeps rising">
+            <line x1="30" y1="225" x2="385" y2="225" stroke="currentColor" opacity=".35" stroke-width="2"/>
+            <line x1="30" y1="225" x2="30" y2="10" stroke="currentColor" opacity=".35" stroke-width="2"/>
+            <line x1="30" y1="95" x2="385" y2="95" stroke="currentColor" stroke-width="2" stroke-dasharray="7 7" opacity=".6"/>
+            <text x="36" y="86">A FIXED CEILING</text>
+            <text x="36" y="243">YEARS OF EFFORT →</text>
+            <path class="draw p1" pathLength="1" d="M30 218 C90 190 150 130 210 100 S300 95 378 95" stroke="currentColor"/>
+            <path class="draw p2" pathLength="1" d="M30 218 C110 208 190 172 250 112 S330 32 378 14" stroke="var(--accent)"/>
+            <circle class="dot pulse" cx="378" cy="14" r="7" fill="var(--accent)"/>
+            <circle class="dot" cx="378" cy="14" r="7" fill="var(--accent)"/>
+            <text class="lab" x="196" y="40" fill="var(--accent)" style="fill:var(--accent)">OWNERSHIP: NO CEILING</text>
+          </svg>
+        </div>
+                <p class="fine">A concept sketch of the idea Neil described, not real income data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="chap flip" id="c2" data-theme="#1d5a45,#f6f2e9,#f2c96d" data-when="2006" data-label="Spot the gap" data-rail="The gap">
+    <div class="num" aria-hidden="true">02</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">02 · 2006 · College Station</div>
+        <h2 data-split>Look at what's missing.</h2>
+        <p class="rv">College Station is home to Texas A&amp;M. When Neil's family bought their first location, he noticed there wasn't much there. What existed was dated and old.</p>
+        <p class="rv" style="--d:.1s">His read of the market: it needed fresh product. He went on to build one location, then three more.</p>
+        <blockquote class="quote rv" style="--d:.2s">“The recognition was the need for fresh product.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Opportunity recognition</span>
+            <ul class="pts">
+              <li style="--i:1">An opportunity isn't just an idea. It's a gap between what customers can get and what they'd want, which you can fill better than others.</li>
+              <li style="--i:2">Neil's gap was quality. The market had hotels, but the product was out of date.</li>
+              <li style="--i:3">He describes the expansion as one location, then an additional three. That's the sequence from the interview, not a claim about his full portfolio today.</li>
+              <li style="--i:4">Local context matters: a university town creates steady demand and rare peak events (you'll see one in chapter 6).</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>Think of a place you know well. What feels “dated” there, and who would pay for something fresh?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Fill the gap <span id="gapCount">1 → +3</span></h4>
+        <div class="hotels" id="hotels">
+          <div class="hotel show"><div class="bld"></div>Original · dated</div>
+          <div class="hotel"><div class="bld"></div>Location 2</div>
+          <div class="hotel"><div class="bld"></div>Location 3</div>
+          <div class="hotel"><div class="bld"></div>Location 4</div>
+        </div>
+        <p class="status" id="gapStatus" aria-live="polite">2006 · College Station: the available product is dated.</p>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="chap" id="c3" data-theme="#f2c96d,#172a24,#c9441f" data-when="Early career" data-label="Horse blinders" data-rail="Blinders">
+    <div class="num" aria-hidden="true">03</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">03 · The early goal</div>
+        <h2 data-split>The hill. Not the mountains.</h2>
+        <p class="rv">Early on, Neil's goal was simple: get as many locations as possible. He didn't know the business would reach where it is today, and he admits that was very much a young guy's problem.</p>
+        <p class="rv" style="--d:.1s">He calls it wearing horse blinders. You only see the hill you're climbing, not the mountains behind it.</p>
+        <blockquote class="quote rv" style="--d:.2s">“You don't really see past the hill that you're trying to get to.”<small>Neil Ratanji · Interview (paraphrased closely)</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Goal fixation</span>
+            <ul class="pts">
+              <li style="--i:1">A single, narrow goal (“more locations”) can hide what it takes to sustain them: staffing, systems, debt, attention.</li>
+              <li style="--i:2">Neil's “mountains” are the harder problems that only appear after you reach the first hill.</li>
+              <li style="--i:3">Later he says he doesn't love goals as a framework at all, a hint that his thinking shifted from chasing a number to building something sustainable.</li>
+            </ul>
+            <div class="reflect" style="--i:4"><b>Reflect</b>What's your “hill” right now, and what might be waiting behind it?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Widen your vision <span>Plays on its own</span></h4>
+        <div class="scene" id="scene" style="--bw:40%;--m:.1">
+          <svg viewBox="0 0 500 300" aria-hidden="true">
+            <g class="mtn" fill="var(--accent)">
+              <polygon points="40,210 150,60 260,210"/>
+              <polygon points="170,210 300,20 430,210"/>
+              <polygon points="330,210 420,90 500,210"/>
+            </g>
+            <path d="M0 300 L0 215 Q130 120 250 215 T500 235 L500 300Z" fill="var(--ink)"/>
+            <line x1="152" y1="160" x2="152" y2="132" stroke="var(--bg)" stroke-width="3"/>
+            <polygon points="152,132 176,141 152,150" fill="var(--bg)"/>
+          </svg>
+          <div class="blinder l"></div><div class="blinder r"></div>
+        </div>
+        
+        <p class="status" id="fovMsg" aria-live="polite">Eyes on the hill. You only see the next goal: more locations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="chap flip" id="c4" data-theme="#ef7952,#1a0f0a,#f6f2e9" data-when="Early 20s" data-label="Hot-headed years" data-rail="Humility">
+    <div class="num" aria-hidden="true">04</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">04 · Age 23–25</div>
+        <h2 data-split>Hot-headed, and humbled.</h2>
+        <p class="rv">Asked how he handled early obstacles, Neil was blunt: like a 23-to-25-year-old who thought he was the hottest thing since sliced bread. That attitude, he says, will really screw you up.</p>
+        <p class="rv" style="--d:.1s">One early lesson came from buying a property, thinking he'd fix it up in six months and leave. It didn't work out that way. He failed, and he learned.</p>
+        <blockquote class="quote rv" style="--d:.2s">“Humility is a huge thing to have.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Learning from failure</span>
+            <ul class="pts">
+              <li style="--i:1">“You don't know how many people in your industry are miles ahead of you.” Some of the quietest people he meets are among the most accomplished.</li>
+              <li style="--i:2">His method for obstacles: when you find an older, experienced source, actively listen. No one reveals all their cards, but they'll give enough to build a solution.</li>
+              <li style="--i:3">He separates wealth from accomplishment. They aren't the same thing.</li>
+              <li style="--i:4">The failed fix-and-flip wasn't the end of the story. Chapter 6 shows what happened when he tried it again a decade later.</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>Who is “miles ahead” of you right now, and when did you last just listen to them?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Hold to actively listen <span>Plays on its own</span></h4>
+        <div class="wave" id="wave" aria-hidden="true"></div>
+        
+        <div class="meter" aria-hidden="true"><i id="lmeter"></i></div>
+        <ul class="chips" id="chips">
+          <li data-t="33">No one shows you every card, so catch the clues.</li>
+          <li data-t="66">Older, experienced voices have already made your mistakes.</li>
+          <li data-t="99">Take notes mentally, then go build the solution.</li>
+        </ul>
+        <p class="status" id="lstatus" aria-live="polite">Listening…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="chap" id="c5" data-theme="#172a24,#f6f2e9,#f2c96d" data-when="Years in" data-label="The 80/20 team" data-rail="The team">
+    <div class="num" aria-hidden="true">05</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">05 · 19 years in business</div>
+        <h2 data-split>Know who carries the load.</h2>
+        <p class="rv">Looking back, Neil wishes he'd built better structure around staffing and learned sooner how to treat his employees. It took him a long time. He's been in business since 23, about 19 years.</p>
+        <p class="rv" style="--d:.1s">His big idea: 80% of your staff does 20% of the work, and 20% does 80%. Digest that, he says, and “then you're in business.”</p>
+        <blockquote class="quote rv" style="--d:.2s">“I do give my 20% preferential treatment.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Pareto thinking &amp; team design</span>
+            <ul class="pts">
+              <li style="--i:1">The point isn't that 80% are “worthless.” Neil says that's simply all they're going to give, and you have to be able to accept it.</li>
+              <li style="--i:2">Knowing your force helps you make better decisions about what the business can actually take on.</li>
+              <li style="--i:3">He says preferential treatment exists whether or not employers admit it, and he invests in the people who go above and beyond.</li>
+              <li style="--i:4">He credits those changes (structure, employees, investing in his 20%) with letting him live his life while the business still moves forward.</li>
+              <li style="--i:5">He mentions a Dallas experience where he “really figured it out,” but the transcript doesn't detail it.</li>
+            </ul>
+            <div class="reflect" style="--i:6"><b>Reflect</b>A strong team is a design choice. How would you create roles and rewards so your top contributors stay?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s" id="staffViz">
+        <h4>The 80/20 rule <span id="staffTitle">Who's on the team</span></h4>
+        <div class="staff" id="staff">
+          <div class="person star"></div><div class="person star"></div><div class="person"></div><div class="person"></div><div class="person"></div>
+          <div class="person"></div><div class="person"></div><div class="person"></div><div class="person"></div><div class="person"></div>
+        </div>
+        <div class="stack" aria-hidden="true"><div class="a" id="stackA">20%</div><div class="b" id="stackB">80%</div></div>
+        <p class="status" id="staffMsg" aria-live="polite">20% of the staff are your high performers. 80% are everyone else.</p>
+        
+        <p class="fine">Per Neil: 20% of staff do 80% of the work. Illustrative ratio, not measured data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="chap flip" id="c6" data-theme="#14213d,#f6f2e9,#f2c96d" data-when="~10 yrs later" data-label="Proof it was learned" data-rail="Ten years later">
+    <div class="num" aria-hidden="true">06</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">06 · A decade later</div>
+        <h2 data-split>Same play. Smarter player.</h2>
+        <p class="rv">About ten years after the first flip didn't work, Neil bought another property, fixed it up and flipped it in around five and a half months. He did exactly what his younger self had imagined.</p>
+        <p class="rv" style="--d:.1s">He wanted it open for a George Strait concert at Kyle Field, when rooms sold for about $1,500 a night. The person who had to sign off said it wouldn't happen in time. A week before the concert, Neil called him in. He signed.</p>
+        <blockquote class="quote rv" style="--d:.2s">“No one tells me I can't do something.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Experience compounds</span>
+            <ul class="pts">
+              <li style="--i:1">His point: there's no such thing as “old and slow.” Everything he'd learned carried forward and sped him up.</li>
+              <li style="--i:2">Event-driven demand is a real lever in a college town. A single weekend can price rooms far above normal.</li>
+              <li style="--i:3">Doubt as fuel: when someone says it can't be done, he treats it as a slap in the face, and he goes out to try.</li>
+              <li style="--i:4">Note the pattern: his drive didn't change, but his judgment did. Same flip, ten years of learning later.</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>Is there a past failure you could retry now with what you know?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Race to the concert <span>~5½ months · 22 weeks</span></h4>
+        <div class="weeks" id="weeks" aria-hidden="true"></div>
+        <div class="bubble" id="bubble" aria-live="polite">Press go and follow the clock.</div>
+        <div class="row"><div class="rate" id="rate">$0<small> /night</small></div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+        
+        <p class="fine">Timeline simplified from Neil's retelling.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="chap" id="c7" data-theme="#b8d9c3,#172a24,#d8502a" data-when="Today" data-label="The value is service" data-rail="Service">
+    <div class="num" aria-hidden="true">07</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">07 · The value he delivers</div>
+        <h2 data-split>A room is a room. Service is the difference.</h2>
+        <p class="rv">Asked how his business creates value, Neil starts with a good product and good service. But when pressed for the main thing, it's service. A hotel room's a hotel room.</p>
+        <p class="rv" style="--d:.1s">He still deals with guests face-to-face, and frontline feedback travels straight to him. It's about how you make them feel.</p>
+        <blockquote class="quote rv" style="--d:.2s">“A hotel room's a hotel room.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Value proposition &amp; segmentation</span>
+            <ul class="pts">
+              <li style="--i:1">Neil sees a generational shift. Older guests (“boomers”) often buy the person: they want to know you, and trust you'll take care of them.</li>
+              <li style="--i:2">Many younger guests would rather check in at a kiosk, go to their room and check out without talking to anyone.</li>
+              <li style="--i:3">His answer isn't a single style. Know the demographic and background, then tailor. Read reviews and surveys, and train staff to treat each type of guest accordingly.</li>
+              <li style="--i:4">Technology, AI and social media keep changing expectations, so flexibility is the strategy.</li>
+              <li style="--i:5">His summary: it comes down to figuring out how to treat people.</li>
+            </ul>
+            <div class="reflect" style="--i:6"><b>Reflect</b>Generalizations like “boomer” and “younger guest” are Neil's shorthand. How would you check what each real customer actually wants?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Read the guest <span>Plays on its own</span></h4>
+        <div class="seg" role="group" aria-label="Guest type">
+          <button type="button" data-g="old" aria-pressed="true">The relationship guest</button>
+          <button type="button" data-g="new" aria-pressed="false">The self-serve guest</button>
+        </div>
+        <div class="guest" id="guest" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section class="chap flip" id="c8" data-theme="#a8321f,#f6f2e9,#f2c96d" data-when="2023" data-label="The big risk" data-rail="2023">
+    <div class="num" aria-hidden="true">08</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">08 · 2023</div>
+        <h2 data-split>Still taking the risk.</h2>
+        <p class="rv">As recently as 2023, Neil took on another project: an existing property in town that was headed to auction. He called the agent he knew and had it taken off the market, because the location was the best, with Kyle Field visible from the parking lot.</p>
+        <p class="rv" style="--d:.1s">He didn't want the property's brand, so he shut it down, empty for two weeks, while the loan payment kept coming due. Then he gutted it, relaunched it as a Best Western, and it's now his number one location.</p>
+        <blockquote class="quote rv" style="--d:.2s">“The bank's not gonna sit back and wait.”<small>Neil Ratanji · Interview (condensed)</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Calculated risk</span>
+            <ul class="pts">
+              <li style="--i:1">Risk didn't vanish with age. He had two boys and a wife at the time, and he still did it.</li>
+              <li style="--i:2">His lesson: a new life stage doesn't mean no risk. It means scaling the business so you can still live your life while you pursue it.</li>
+              <li style="--i:3">Notice the preparation: relationships (the agent), a clear thesis (location + a different brand), and a plan for the downtime.</li>
+              <li style="--i:4">Outcome as he reports it: the property became the top location in his portfolio.</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>What's the difference between a bold bet and a reckless one? Where did Neil put the guardrails?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>The 2023 project <span id="stepCount">Step 1 / 6</span></h4>
+        <div class="steps" id="steps">
+          <div class="fill" id="stepFill"></div>
+        </div>
+        <div class="stepcard" id="stepcard" aria-live="polite"></div>
+        <div class="bank" id="bank"><i></i>Loan payment: still due. The bank won't wait.</div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="chap" id="c9" data-theme="#3b2a1f,#f6f2e9,#ef7952" data-when="The lesson" data-label="Go slow, go wise" data-rail="Slow & wise">
+    <div class="num" aria-hidden="true">09</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">09 · Pace</div>
+        <h2 data-split>Low and slow beats the microwave.</h2>
+        <p class="rv">Moving fast, aggressive, with multiple locations (“grow, grow, grow”) can actually hurt you. Neil's analogy: growth in a microwave boils over; smoked low and slow for a day and a half, it comes out amazing.</p>
+        <p class="rv" style="--d:.1s">He's turned down many deals his agents brought him, including one he and Krish looked at and passed on immediately. You don't have to keep growing to make money.</p>
+        <blockquote class="quote rv" style="--d:.2s">“Go slow, but go wise.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Sustainable growth</span>
+            <ul class="pts">
+              <li style="--i:1">“Growth” doesn't have to mean property after property, or app release after app release. It's whatever your business is.</li>
+              <li style="--i:2">Saying no is a skill. A deal you don't take is a decision, and he says he learns from those too.</li>
+              <li style="--i:3">Too-fast growth can “come back to bite you,” because people and systems lag behind the footprint.</li>
+              <li style="--i:4">Compare with chapter 3: the young goal was “as many as possible.” The mature goal is “as many as I can run well.”</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>What is one opportunity you'd have to say no to in order to do your best work?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>Two ways to grow <span>Plays on its own</span></h4>
+        <div class="lanes">
+          <div class="lane" id="mw"><b>🔥 Microwave growth</b><span class="big" aria-hidden="true"></span><div class="bar"><i></i></div><div class="msg">Fast. Hot. Unattended.</div></div>
+          <div class="lane" id="sm"><b>🍖 Low &amp; slow growth</b><span class="big" aria-hidden="true"></span><div class="smoke" aria-hidden="true"><i></i><i></i><i></i></div><div class="bar"><i></i></div><div class="msg">Patient. Attended. Progressive.</div></div>
+        </div>
+        
+        <div class="deal" id="deal"><span>📬 A deal lands on your desk. Sound good?</span><span class="tag">Pass ✕</span></div>
+        <p class="status" id="dealMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="chap flip" id="c10" data-theme="#fbe3c4,#172a24,#1d5a45" data-when="Age 42" data-label="Freedom" data-rail="Now">
+    <div class="num" aria-hidden="true">10</div>
+    <div class="wrap">
+      <div class="text">
+        <div class="kicker rv">10 · Today · Age 42</div>
+        <h2 data-split>Not stuck. Just free.</h2>
+        <p class="rv">Nearly 20 years in, what keeps Neil going is the freedom and lifestyle the business gives him, time with his two boys and his wife, good money, and the people he's met. He wears shorts and a t-shirt to work.</p>
+        <p class="rv" style="--d:.1s">He's not even sure he wants a different industry, but he knows he's not stuck in one. Life will happen, and you won't be a 23-year-old chasing it 16 hours a day forever.</p>
+        <blockquote class="quote rv" style="--d:.2s">“You're not stuck in one business.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="deep rv">
+          <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
+          <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
+            <span class="concept" style="--i:0">Concept · Designing the business around your life</span>
+            <ul class="pts">
+              <li style="--i:1">He credits structure, employees and investing in his top 20% for letting the business go forward without consuming his life.</li>
+              <li style="--i:2">“Life isn't like that anymore,” he says of the 16-to-18-hour days of his early twenties, and he's glad he made the changes.</li>
+              <li style="--i:3"><b>Neil's hot takes (his opinions):</b> “Contracts are like hearts, they're meant to be broken,” but he's clear that breaking one costs money and you'd better be willing to pay it. Also: keep your bankers close. Treat this as a founder's provocative style, not legal advice. Read and understand what you sign.</li>
+              <li style="--i:4">Parting advice to the students: don't be afraid of the big move, but know the price of it.</li>
+            </ul>
+            <div class="reflect" style="--i:5"><b>Reflect</b>What would your “shorts and a t-shirt” version of success look like?</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="viz rv" style="--d:.15s">
+        <h4>By the numbers <span>From the interview</span></h4>
+        <div class="nums">
+          <div><b><span class="count" data-to="23">0</span></b><span>Age he began</span></div>
+          <div><b><span class="count" data-to="19">0</span></b><span>Years in</span></div>
+          <div><b><span class="count" data-to="42">0</span></b><span>Age today</span></div>
+        </div>
+        <h4 style="margin-top:8px">What keeps him going <span>Plays on its own</span></h4>
+        <div class="mot" id="mot">
+          <button type="button" data-n="He says the business gives him freedom: control over how he spends his days.">Freedom</button>
+          <button type="button" data-n="The lifestyle it gives him, including shorts and a t-shirt to work every day.">Lifestyle</button>
+          <button type="button" data-n="Time with his two boys and his wife.">Family time</button>
+          <button type="button" data-n="He says he also wants to make good money. Honest and simple.">Good money</button>
+          <button type="button" data-n="The people he's met through the business.">People</button>
+        </div>
+        <p class="status" id="motNote" aria-live="polite">What keeps him going, in his terms.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINALE -->
+  <section class="finale" id="finale" data-theme="#f6f2e9,#172a24,#ef7952" data-when="Your turn" data-label="Build with intention" data-rail="Quiz">
+    <div class="inner">
+      <div class="kicker rv">Lessons · Tap to flip</div>
+      <h2 data-split>Six takeaways.</h2>
+      <div class="flips" id="flips">
+        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">01</span><h3>Own it</h3></div><div class="face back">Whatever you create is yours, and no one can take it unless you give it away.</div></div></button>
+        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">02</span><h3>Spot the gap</h3></div><div class="face back">The need was fresh product in a market full of dated options.</div></div></button>
+        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">03</span><h3>Lift your head</h3></div><div class="face back">Horse blinders hide the mountains behind your hill.</div></div></button>
+        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">04</span><h3>Listen first</h3></div><div class="face back">Humility and active listening beat ego, every time.</div></div></button>
+        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">05</span><h3>Know your 20%</h3></div><div class="face back">A small group carries most of the load. Understand it and invest in them.</div></div></button>
+        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">06</span><h3>Go slow, go wise</h3></div><div class="face back">You don't have to keep growing to make money.</div></div></button>
+      </div>
+
+      <div class="quiz rv">
+        <div class="kicker">Knowledge check</div>
+        <h3 id="qText"></h3>
+        <div class="opts" id="qOpts"></div>
+        <p class="qfb" id="qFb" aria-live="polite"></p>
+        <div class="qmeta"><div class="qdots" id="qDots"></div><button class="btn" id="qNext" type="button" style="display:none">Next →</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><a href="#top">↑ Back to the beginning</a></p>
+  <p>This experience summarizes themes from a student interview with Neil Ratanji. It's educational, not a complete company profile. Details and lessons are presented as he described them in the supplied transcript. Chart, skyline and scene graphics are illustrative, not depictions of specific properties or real figures.</p>
+  <p>Source: ENTR interview transcript supplied for this project.</p>
+</footer>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const hex=h=>{h=h.replace('#','');return[0,2,4].map(i=>parseInt(h.substr(i,2),16))};
+const ticks=[];
+
+/* ---------- text splitting ---------- */
+const h1=$('#heroTitle');let li=0;
+h1.innerHTML=h1.dataset.text.split('|').map(line=>`<span class="line" aria-hidden="true">${[...line].map(ch=>`<span class="l" style="--i:${li++}">${ch===' '?'&nbsp;':ch}</span>`).join('')}</span>`).join('');
+$$('[data-split]').forEach(el=>{
+  const t=el.textContent.trim();el.setAttribute('aria-label',t);
+  el.innerHTML=t.split(/\s+/).map((w,i)=>`<span class="w" aria-hidden="true" style="--i:${i}"><span>${w}</span></span>`).join(' ');
+});
+
+/* ---------- reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.18});
+$$('.rv,[data-split]').forEach(el=>io.observe(el));
+
+function whenSeen(el,fn,th=.35){if(!el)return;const o=new IntersectionObserver(es=>{if(es[0].isIntersecting){fn();o.disconnect()}},{threshold:th});o.observe(el)}
+function animNum(el,to,dur=1400,fmt=v=>Math.round(v)){
+  if(reduce){el.textContent=fmt(to);return}
+  const s=performance.now();(function f(n){const p=clamp((n-s)/dur,0,1),e=1-Math.pow(1-p,3);el.textContent=fmt(to*e);if(p<1)requestAnimationFrame(f)})(s);
+}
+$$('.count').forEach(el=>whenSeen(el.closest('.viz'),()=>animNum(el,+el.dataset.to),.4));
+
+/* ---------- theme + rail + hud ---------- */
+const sections=$$('[data-theme]');
+const cur={bg:hex('#f6f2e9'),ink:hex('#172a24'),acc:hex('#ef7952')};
+const tgt={bg:[...cur.bg],ink:[...cur.ink],acc:[...cur.acc]};
+const rail=$('#rail');
+sections.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',s.dataset.rail);b.innerHTML=`<span>${s.dataset.rail}</span>`;b.onclick=()=>s.scrollIntoView({behavior:reduce?'auto':'smooth'});rail.appendChild(b)});
+const railBtns=$$('button',rail),hud=$('#hud'),hudWhen=$('#hudWhen'),hudLabel=$('#hudLabel');
+let activeIdx=-1;
+const so=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const i=sections.indexOf(e.target);if(i===activeIdx)return;activeIdx=i;
+  const [b,k,a]=e.target.dataset.theme.split(',');tgt.bg=hex(b);tgt.ink=hex(k);tgt.acc=hex(a);
+  railBtns.forEach((x,j)=>x.classList.toggle('on',j===i));
+  hudLabel.textContent=e.target.dataset.label;
+  if(hudWhen.textContent!==e.target.dataset.when){hudWhen.textContent=e.target.dataset.when;hud.classList.remove('flip');void hud.offsetWidth;hud.classList.add('flip')}
+}),{rootMargin:'-45% 0px -45% 0px'});
+sections.forEach(s=>so.observe(s));
+
+/* ---------- skyline canvas ---------- */
+const cv=$('#sky'),ctx=cv.getContext('2d');let W,H,dpr;
+function size(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+addEventListener('resize',size);size();
+let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const blds=Array.from({length:24},(_,i)=>({x:i/24+rnd()*.01,w:.032+rnd()*.03,h:.14+rnd()*.34,th:i/24*.9,s:rnd()*10,layer:i%2}));
+const stars=Array.from({length:55},()=>({x:rnd(),y:rnd()*.55,r:rnd()*1.6+.4,s:rnd()*6}));
+let mx=.5,my=.5,gx=.5,gy=.5;
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth;my=e.clientY/innerHeight},{passive:true});
+const glow=$('#glow'),prog=$('#progress'),root=document.documentElement;
+function draw(now){
+  const t=now/1000;ctx.clearRect(0,0,W,H);
+  const maxS=root.scrollHeight-H,p=maxS>0?scrollY/maxS:0;
+  const ink=cur.ink.map(Math.round).join(','),acc=cur.acc.map(Math.round).join(',');
+  stars.forEach(s=>{ctx.globalAlpha=.1+.28*Math.abs(Math.sin(t*.9+s.s));ctx.fillStyle=`rgb(${ink})`;ctx.beginPath();ctx.arc(s.x*W-(gx-.5)*18,s.y*H,s.r,0,7);ctx.fill()});
+  ctx.globalAlpha=1;
+  const sx=W*(.1+.8*p),sy=H*.26-Math.sin(p*Math.PI)*H*.1,sr=Math.min(W,H)*.09;
+  const g=ctx.createRadialGradient(sx,sy,0,sx,sy,sr*2.4);g.addColorStop(0,`rgba(${acc},.55)`);g.addColorStop(.4,`rgba(${acc},.18)`);g.addColorStop(1,`rgba(${acc},0)`);
+  ctx.fillStyle=g;ctx.fillRect(sx-sr*3,sy-sr*3,sr*6,sr*6);
+  ctx.fillStyle=`rgba(${acc},.45)`;ctx.beginPath();ctx.arc(sx,sy,sr*.55,0,7);ctx.fill();
+  blds.slice().sort((a,b)=>a.layer-b.layer).forEach(b=>{
+    const gr=clamp((p-b.th)/.09,0,1),e=1-Math.pow(1-gr,3);if(e<.01)return;
+    const par=(gx-.5)*(b.layer?-34:-14),bw=b.w*W,bh=b.h*H*e*(b.layer?1:1.3),x=b.x*W+par,y=H-bh;
+    ctx.fillStyle=`rgba(${ink},${b.layer?.11:.06})`;ctx.fillRect(x,y,bw,bh);
+    if(b.layer&&e>.85){
+      const cols=Math.max(1,Math.floor((bw-6)/13)),rows=Math.floor((bh-10)/18);
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+        if(Math.sin(t*.7+b.s*3+r*2.7+c*5.1)>.5){ctx.fillStyle=`rgba(${acc},.65)`;ctx.fillRect(x+5+c*13,y+8+r*18,6,9)}
+      }
+    }
+    if(b.layer&&e>.95&&b.th>.55){ctx.fillStyle=`rgba(${acc},${.5+.5*Math.sin(t*3+b.s)})`;ctx.fillRect(x+bw/2-2,y-10,4,10)}
+  });
+  ctx.fillStyle=`rgba(${ink},.14)`;ctx.fillRect(0,H-4,W,4);
+}
+let last=performance.now(),settled=false;
+function frame(now){
+  const dt=now-last;last=now;
+  const k=reduce?1:.075;let maxd=0;
+  for(const key of['bg','ink','acc'])for(let i=0;i<3;i++){const d=tgt[key][i]-cur[key][i];maxd=Math.max(maxd,Math.abs(d));cur[key][i]+=d*k}
+  if(maxd>.3||!settled){
+    const c=a=>`rgb(${a.map(Math.round)})`;
+    root.style.setProperty('--bg',c(cur.bg));root.style.setProperty('--ink',c(cur.ink));root.style.setProperty('--accent',c(cur.acc));
+    settled=maxd<=.3;
+  }
+  gx+=(mx-gx)*.06;gy+=(my-gy)*.06;
+  glow.style.transform=`translate(${gx*innerWidth}px,${gy*innerHeight}px)`;
+  const maxS=root.scrollHeight-innerHeight;prog.style.width=(maxS>0?scrollY/maxS*100:0)+'%';
+  draw(now);
+  ticks.forEach(f=>f(now,dt));
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+if(window.matchMedia('(pointer:coarse)').matches)glow.style.display='none';
+
+/* parallax numbers */
+const nums=$$('.chap .num');
+addEventListener('scroll',()=>{if(reduce)return;nums.forEach(n=>{const r=n.parentElement.getBoundingClientRect();n.style.transform=`translateY(${(r.top*-.12).toFixed(1)}px)`})},{passive:true});
+
+/* ---------- dropdowns ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.deep-btn');if(!b)return;
+  const d=b.closest('.deep'),o=d.classList.toggle('open');
+  b.setAttribute('aria-expanded',o);b.querySelector('.lbl').textContent=o?'Close':'Go deeper';
+});
+
+/* tilt */
+if(!reduce&&!matchMedia('(pointer:coarse)').matches){
+  $$('.viz').forEach(v=>{
+    v.addEventListener('pointermove',e=>{const r=v.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;v.style.transform=`perspective(900px) rotateY(${x*4}deg) rotateX(${-y*4}deg)`});
+    v.addEventListener('pointerleave',()=>v.style.transform='');
+  });
+}
+
+/* ---------- auto-playing scenes (no buttons) ---------- */
+$$('.seg button,.steps button,.mot button').forEach(b=>b.setAttribute('tabindex','-1'));
+const everyRun=(el,fn,ms,th=.3)=>whenSeen(el,()=>{fn();setInterval(fn,ms)},th);
+
+/* 01 chart redraws itself */
+const ceil=$('#ceil');
+function playCeil(){ceil.classList.remove('go');void ceil.getBoundingClientRect();ceil.classList.add('go')}
+everyRun(ceil,playCeil,9000,.4);
+
+/* 02 hotels: dated -> fresh -> +3 */
+{
+  const hs=$$('#hotels .hotel'),msg=$('#gapStatus');let st=0;
+  const msgs=['2006 · College Station: the available product is dated.','The need was fresh product. Same market, a better offer.','Location 2 opens.','Location 3 opens.','1 → +3: four locations, the sequence Neil described.'];
+  function render(){
+    hs[0].classList.toggle('fresh',st>=1);hs[0].lastChild.textContent=st>=1?'Original · refreshed':'Original · dated';
+    hs.forEach((h,i)=>{if(i>0){h.classList.toggle('show',st>=i+1);h.classList.toggle('fresh',st>=i+1)}});
+    msg.textContent=msgs[st];
+  }
+  render();
+  everyRun($('#hotels'),()=>{[0,1700,3400,4700,6000].forEach((d,i)=>setTimeout(()=>{st=i;render()},d))},10000);
+}
+
+/* 03 blinders open and close on their own */
+{
+  const sc=$('#scene'),m=$('#fovMsg');let t0=null,last='';
+  whenSeen(sc,()=>{t0=performance.now()},.3);
+  ticks.push(now=>{
+    if(t0===null)return;
+    const v=50-50*Math.cos((now-t0)/9000*Math.PI*2);
+    sc.style.setProperty('--bw',(1-v/100)*42+'%');sc.style.setProperty('--m',(.08+v/100*.92).toFixed(2));
+    const t=v<35?'Eyes on the hill. You only see the next goal: more locations.':v<75?'Your peripheral vision is creeping in…':'There are mountains behind the hill. How will you climb them?';
+    if(t!==last){m.textContent=t;last=t}
+  });
+}
+
+/* 04 listening: waveform, meter, advice lights up */
+{
+  const wave=$('#wave');for(let i=0;i<26;i++)wave.appendChild(document.createElement('i'));
+  const bars=$$('i',wave),meter=$('#lmeter'),chips=$$('#chips li'),ls=$('#lstatus');let t0=null,last='';
+  whenSeen(wave,()=>{t0=performance.now()},.3);
+  ticks.push(now=>{
+    if(t0===null)return;
+    const c=(now-t0)%7000;let val;
+    if(c<4000)val=c/4000*100;else if(c<5600)val=100;else val=100-(c-5600)/1400*100;
+    const holding=c<5600;
+    meter.style.width=val+'%';
+    chips.forEach(ch=>ch.classList.toggle('lit',val>=+ch.dataset.t));
+    const t=val>=100?'Heard it all. That\'s what Neil means by actively listening.':holding?'Listening…':'Reset. Listen again.';
+    if(t!==last){ls.textContent=t;last=t}
+    const a=holding?.35+.65*val/100:.06,tt=now/260;
+    bars.forEach((b,i)=>{b.style.height=(8+Math.abs(Math.sin(tt+i*.7)*Math.cos(tt*.6+i))*72*a)+'px'});
+  });
+}
+
+/* 05 staff flips between headcount and output */
+{
+  const v=$('#staffViz'),msg=$('#staffMsg'),a=$('#stackA'),b=$('#stackB'),ti=$('#staffTitle');let w=false;
+  function apply(){v.classList.toggle('work',w);
+    a.textContent=w?'80%':'20%';b.textContent=w?'20%':'80%';
+    ti.textContent=w?'Who does the work':'Who\'s on the team';
+    msg.textContent=w?'The 20% who go above and beyond do roughly 80% of the work. Neil invests in them.':'20% of the staff are your high performers. 80% are everyone else.'}
+  whenSeen(v,()=>setTimeout(()=>{w=true;apply();setInterval(()=>{w=!w;apply()},4200)},2000),.35);
+}
+
+/* 06 race to the concert */
+{
+  const wk=$('#weeks');for(let i=0;i<22;i++)wk.appendChild(document.createElement('i'));
+  const cells=$$('i',wk),bub=$('#bubble'),rate=$('#rate'),stamp=$('#stamp');let timers=[];
+  const fmt=v=>'$'+Math.round(v).toLocaleString();
+  function run(){
+    timers.forEach(clearTimeout);timers=[];
+    cells.forEach(c=>c.classList.remove('on'));stamp.classList.remove('on');rate.firstChild.textContent='$0';
+    bub.textContent='The sign-off guy says it ain\'t gonna happen in time. “Try me.”';
+    cells.forEach((c,i)=>timers.push(setTimeout(()=>c.classList.add('on'),400+i*160)));
+    timers.push(setTimeout(()=>bub.textContent='The concert is coming. The building has to be ready.',400+9*160));
+    timers.push(setTimeout(()=>bub.textContent='A week before George Strait: “Come down here.” He inspects the property…',400+20*160));
+    timers.push(setTimeout(()=>{bub.textContent="“I can't believe it.” “Yeah, you can. Sign it now.”";stamp.classList.add('on');animNum(rate.firstChild,1500,1500,fmt)},400+22*160+200));
+  }
+  everyRun(wk,run,8200);
+}
+
+/* 07 guest types alternate */
+{
+  const g=$('#guest'),btns=$$('.seg button');
+  const data={
+    old:{i:'🤝',h:'The relationship guest',t:'Buys the person. “Neil knows me, and Neil is going to take care of me.”',s:'Serve with: a name, a handshake, real attention.'},
+    new:{i:'📱',h:'The self-serve guest',t:'Would rather use a kiosk, go to the room and skip the small talk.',s:'Serve with: speed, simple tech, space to be left alone.'}
+  };
+  function show(k){const d=data[k];g.classList.remove('swap');void g.offsetWidth;g.classList.add('swap');
+    g.innerHTML=`<div class="ico">${d.i}</div><h5>${d.h}</h5><p>${d.t}</p><p><span class="tag">${d.s}</span></p><p class="fine">Neil's shorthand for two ends of a spectrum, so read each real guest.</p>`;
+    btns.forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===k))}
+  let k='old';show(k);
+  whenSeen(g,()=>setInterval(()=>{k=k==='old'?'new':'old';show(k)},4200),.35);
+}
+
+/* 08 the 2023 project plays through */
+{
+  const S=[
+    ['On the auction block','An existing property in town goes up for auction. Neil calls an agent he knows and has done deals with.',false],
+    ['Pull it off the market',"He asks to take it off the table and offers to make it worth the seller's while. He wants that location back.",false],
+    ['Bought. Then dark.',"He doesn't want the brand, so he shuts the building down. Empty for two weeks, while the note payment keeps coming.",true],
+    ['Gutted','He tears the place apart and rebuilds it from the inside out.',false],
+    ['Relaunched','It returns to the market as a Best Western.',false],
+    ['Number one',"Neil says it's now his top location in the portfolio.",false]
+  ];
+  const wrap=$('#steps'),fill=$('#stepFill'),card=$('#stepcard'),bank=$('#bank'),cnt=$('#stepCount');let cur=0;
+  S.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.textContent=i+1;b.setAttribute('tabindex','-1');b.setAttribute('aria-label','Step '+(i+1)+': '+S[i][0]);wrap.appendChild(b)});
+  const bs=$$('button',wrap);
+  function go(i){cur=i;const s=S[i];
+    card.classList.remove('swap');void card.offsetWidth;card.classList.add('swap');
+    card.innerHTML=`<h5>${s[0]}</h5><p>${s[1]}</p>`;
+    bs.forEach((b,j)=>{b.classList.toggle('on',j===i);b.classList.toggle('done',j<i)});
+    fill.style.width=`calc((100% - 32px) * ${i/(S.length-1)})`;
+    bank.classList.remove('show');if(s[2]){void bank.offsetWidth;bank.classList.add('show')}
+    cnt.textContent=`Step ${i+1} / ${S.length}`}
+  go(0);
+  whenSeen(card,()=>setInterval(()=>go(cur>=S.length-1?0:cur+1),2400),.35);
+}
+
+/* 09 microwave vs low-and-slow, plus a deal passing by */
+{
+  const mw=$('#mw'),sm=$('#sm'),deal=$('#deal'),dm=$('#dealMsg');let timers=[];
+  function run(){
+    timers.forEach(clearTimeout);timers=[];
+    [mw,sm].forEach(l=>{l.classList.remove('run','boom');l.querySelector('.big').textContent=''});
+    mw.querySelector('.msg').textContent='Fast. Hot. Unattended.';sm.querySelector('.msg').textContent='Patient. Attended. Progressive.';
+    deal.classList.remove('gone');dm.textContent='';void mw.offsetWidth;
+    requestAnimationFrame(()=>{mw.classList.add('run');sm.classList.add('run')});
+    timers.push(setTimeout(()=>{mw.classList.add('boom');mw.querySelector('.big').textContent='💥';mw.querySelector('.msg').textContent='It boils over and blows up.'},1050));
+    timers.push(setTimeout(()=>{sm.querySelector('.big').textContent='😋';sm.querySelector('.msg').textContent='A day and a half later: so good.'},7100));
+    timers.push(setTimeout(()=>{deal.classList.add('gone');dm.textContent="Passed. Neil says many deals just aren't worth it, and you don't have to keep growing to make money."},7800));
+  }
+  everyRun(mw,run,12000);
+}
+
+/* 10 motivators light up in turn */
+{
+  const bs=$$('#mot button'),n=$('#motNote');let i=0;
+  function show(){bs.forEach((x,j)=>x.classList.toggle('on',j===i));n.textContent=bs[i].dataset.n;i=(i+1)%bs.length}
+  whenSeen($('#mot'),()=>{show();setInterval(show,2800)},.35);
+}
+
+/* ---------- flip cards ---------- */
+$$('.flipc').forEach(c=>c.onclick=()=>c.classList.toggle('flipped'));
+
+/* ---------- quiz ---------- */
+{
+  const Q=[
+    {q:'Why did Neil choose the hotel business over his IBM job?',o:['A guaranteed higher salary','No ceiling: what you build is yours','The hotel was already famous'],a:1,e:'He liked the potential of having no limit, and the idea that you keep what you create.'},
+    {q:'What does Neil\'s 80/20 idea say about a team?',o:['80% of staff do 80% of the work','20% of staff do 80% of the work','Everyone does the same amount'],a:1,e:'20% of the staff do 80% of the work, so it pays to know them and invest in them.'},
+    {q:'What was the main value he says his hotels deliver?',o:['The room itself','The lowest price','Service'],a:2,e:'“A hotel room\'s a hotel room.” Service, and how you make guests feel, is the difference.'},
+    {q:'What did he conclude about growth?',o:['Add as many locations as possible, fast','You don\'t have to keep growing to make money','Never take on risk'],a:1,e:'Go slow, but go wise. Some deals are better turned down.'}
+  ];
+  let qi=0,score=0,answered=false;
+  const qT=$('#qText'),qO=$('#qOpts'),qF=$('#qFb'),qD=$('#qDots'),qN=$('#qNext');
+  function render(){
+    answered=false;qN.style.display='none';qF.textContent='';
+    qD.innerHTML=Q.map((_,i)=>`<i class="${i<=qi?'on':''}"></i>`).join('');
+    const q=Q[qi];qT.textContent=`${qi+1}. ${q.q}`;qO.innerHTML='';
+    q.o.forEach((t,i)=>{const b=document.createElement('button');b.type='button';b.textContent=t;
+      b.onclick=()=>{if(answered)return;answered=true;
+        const ok=i===q.a;if(ok)score++;
+        b.classList.add(ok?'right':'wrong');if(!ok)qO.children[q.a].classList.add('right');
+        $$('button',qO).forEach(x=>x.disabled=true);
+        qF.textContent=(ok?'Yes! ':'Not quite. ')+q.e;
+        qN.textContent=qi===Q.length-1?'See my score':'Next →';qN.style.display='';};
+      qO.appendChild(b)});
+  }
+  function finish(){
+    qD.innerHTML=Q.map(()=>'<i class="on"></i>').join('');
+    qT.textContent=`You scored ${score} / ${Q.length}`;
+    qO.innerHTML='';qN.textContent='↻ Try again';qN.style.display='';qN.dataset.done='1';
+    qF.textContent=score===Q.length?'Perfect. Build with intention, and learn as you go.':'Good start. Scroll back up for anything you want to revisit.';
+    if(score>=3&&!reduce){const cols=['#ef7952','#f2c96d','#1d5a45','#b8d9c3','#172a24'];
+      for(let i=0;i<46;i++){const c=document.createElement('span');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%5];c.style.animationDelay=Math.random()*.8+'s';c.style.animationDuration=2.4+Math.random()*1.6+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),5000)}}
+  }
+  qN.onclick=()=>{if(qN.dataset.done){qN.dataset.done='';qi=0;score=0;render();return}
+    if(qi===Q.length-1){finish();return}qi++;render()};
+  render();
+}
+})();
+</script>
+</body>
+</html>
