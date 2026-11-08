@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f2e9; --ink:#172a24; --accent:#ef7952;
+  --bg:#fff8ec; --ink:#141b4d; --accent:#ff6a2b;
   --card:color-mix(in srgb,var(--ink) 7%,transparent);
   --soft:color-mix(in srgb,var(--ink) 55%,var(--bg));
   --disp:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -302,7 +302,7 @@ footer a{color:var(--ink);font-weight:800}
 
 body{overflow:hidden}
 /* ===== WORLD ===== */
-.world{position:fixed;inset:0;overflow:hidden;background:linear-gradient(#ffd9b5,#fdeee0);--gh:clamp(110px,18vh,170px);color:#172a24;touch-action:pan-y}
+.world{position:fixed;inset:0;overflow:hidden;background:linear-gradient(#ffd9b5,#fdeee0);--gh:clamp(110px,18vh,170px);color:#141b4d;touch-action:pan-y}
 .stars{position:absolute;left:0;top:0;width:2px;height:2px;border-radius:50%;opacity:0;pointer-events:none}
 .sun{position:absolute;width:96px;height:96px;border-radius:50%;margin:-48px 0 0 -48px;pointer-events:none}
 .layer{position:absolute;left:0;right:0;bottom:var(--gh);height:300px;background-repeat:repeat-x;background-size:1200px 300px;pointer-events:none}
@@ -311,18 +311,18 @@ body{overflow:hidden}
 .cloud::after{content:"";position:absolute;left:80px;top:-14px;width:54px;height:46px;border-radius:50%;background:inherit}
 @keyframes drift{from{transform:translateX(-260px)}to{transform:translateX(110vw)}}
 .strip{position:absolute;left:0;top:0;bottom:0;will-change:transform}
-.ground{position:absolute;left:0;right:0;bottom:0;height:var(--gh);background:#2a3d35;border-top:8px solid #46665a}
-.ground::after{content:"";position:absolute;left:0;right:0;top:46%;height:6px;background:repeating-linear-gradient(90deg,#f2c96d 0 40px,transparent 40px 90px);opacity:.75}
+.ground{position:absolute;left:0;right:0;bottom:0;height:var(--gh);background:#1b2250;border-top:8px solid #3b49b5}
+.ground::after{content:"";position:absolute;left:0;right:0;top:46%;height:6px;background:repeating-linear-gradient(90deg,#ffd23f 0 40px,transparent 40px 90px);opacity:.75}
 .titlecard{position:absolute;left:90px;top:13vh;width:min(660px,62vw)}
 .titlecard .k{font:800 11px var(--disp);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;gap:10px;align-items:center}
-.titlecard .k::before{content:"";width:34px;height:3px;background:#ef7952}
+.titlecard .k::before{content:"";width:34px;height:3px;background:#ff6a2b}
 .titlecard h1{font:800 clamp(3rem,8.5vw,7.6rem)/.84 var(--disp);letter-spacing:-.06em;margin:0 0 16px}
-.titlecard h1 em{display:block;font:italic 400 1em var(--serif);color:#ef7952;letter-spacing:-.04em}
+.titlecard h1 em{display:block;font:italic 400 1em var(--serif);color:#ff6a2b;letter-spacing:-.04em}
 .titlecard p{font-size:1.05rem;max-width:40ch;margin:0 0 10px}
 .titlecard .go{font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:12px;animation:nudge 1.2s ease-in-out infinite;display:inline-block}
 @keyframes nudge{50%{transform:translateX(12px)}}
-.lamp{position:absolute;bottom:var(--gh);width:8px;height:150px;background:#2a3d35;border-radius:4px}
-.lamp::before{content:"";position:absolute;left:-14px;top:-12px;width:36px;height:22px;border-radius:12px 12px 4px 4px;background:#2a3d35}
+.lamp{position:absolute;bottom:var(--gh);width:8px;height:150px;background:#1b2250;border-radius:4px}
+.lamp::before{content:"";position:absolute;left:-14px;top:-12px;width:36px;height:22px;border-radius:12px 12px 4px 4px;background:#1b2250}
 .lamp::after{content:"";position:absolute;left:-26px;top:6px;width:60px;height:60px;border-radius:50%;background:radial-gradient(#ffe9a8,transparent 70%);opacity:.5}
 .prop{position:absolute;bottom:calc(var(--gh) - 6px);font-size:58px;pointer-events:none;filter:drop-shadow(0 4px 0 rgba(0,0,0,.12))}
 /* doors */
@@ -335,7 +335,7 @@ body{overflow:hidden}
 .door.near .panel{transform:perspective(700px) rotateY(-28deg)}
 .door.open .panel{transform:perspective(700px) rotateY(-84deg)}
 .door.near .frame,.door.open .frame{box-shadow:0 0 0 5px #fff,0 0 70px 14px color-mix(in srgb,var(--c) 70%,#fff)}
-.sign{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%);white-space:nowrap;background:rgba(255,255,255,.94);color:#172a24;border:3px solid var(--c);border-radius:14px;padding:8px 14px;text-align:center;font-weight:800;font-size:14px;letter-spacing:-.01em}
+.sign{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%);white-space:nowrap;background:rgba(255,255,255,.94);color:#141b4d;border:3px solid var(--c);border-radius:14px;padding:8px 14px;text-align:center;font-weight:800;font-size:14px;letter-spacing:-.01em}
 .sign b{display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:50%;background:var(--c);color:var(--tc);margin-right:8px;font-size:12px}
 .sign i{display:block;font:italic 400 .9rem var(--serif);color:#51625a;margin-top:2px}
 .emblem{position:absolute;left:50%;bottom:calc(100% + 96px);transform:translateX(-50%);font-size:46px;animation:bobE 2.6s ease-in-out infinite}
@@ -348,7 +348,7 @@ body{overflow:hidden}
 .walker svg{display:block;overflow:visible;transform:scaleX(var(--f,1));transition:transform .35s,opacity .35s}
 .walker.in svg{opacity:0;transform:scaleX(var(--f,1)) scale(.4) translateY(-20px)}
 .walker::after{content:"";position:absolute;left:6px;right:6px;bottom:-4px;height:8px;border-radius:50%;background:rgba(0,0,0,.25);z-index:-1}
-.walker line,.walker .ln{stroke:#172a24;stroke-width:5;stroke-linecap:round;fill:none}
+.walker line,.walker .ln{stroke:#141b4d;stroke-width:5;stroke-linecap:round;fill:none}
 .legL{transform-origin:30px 65px;transform:rotate(10deg)}.legR{transform-origin:30px 65px;transform:rotate(-10deg)}
 .armL{transform-origin:30px 38px;transform:rotate(14deg)}.armR{transform-origin:30px 38px;transform:rotate(-14deg)}
 .walking .legL{animation:swing .48s ease-in-out infinite}.walking .legR{animation:swing .48s ease-in-out infinite reverse}
@@ -358,18 +358,18 @@ body{overflow:hidden}
 @keyframes swing{0%,100%{transform:rotate(-34deg)}50%{transform:rotate(34deg)}}
 @keyframes wbob{to{transform:translateY(-3px)}}
 @keyframes breathe{50%{transform:translateY(1.5px)}}
-.prompt{position:absolute;left:50%;bottom:132px;transform:translateX(-50%);white-space:nowrap;background:#172a24;color:#fff;border:0;border-radius:99px;padding:9px 16px;font:800 12px var(--disp);letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 #ef7952;animation:pbob 1.5s ease-in-out infinite;z-index:2}
+.prompt{position:absolute;left:50%;bottom:132px;transform:translateX(-50%);white-space:nowrap;background:#141b4d;color:#fff;border:0;border-radius:99px;padding:9px 16px;font:800 12px var(--disp);letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 #ff6a2b;animation:pbob 1.5s ease-in-out infinite;z-index:2}
 .prompt[hidden]{display:none}
 @keyframes pbob{50%{transform:translateX(-50%) translateY(-6px)}}
 /* hub ui */
 .htitle,.hprog,.hhint,.pad{position:fixed;z-index:20}
 .htitle{left:4vw;top:16px;display:flex;flex-direction:column;gap:2px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .htitle b{font-size:13px;font-weight:800}.htitle span{opacity:.7;font-weight:700}
-.hprog{right:4vw;top:14px;display:flex;align-items:center;gap:12px;background:#172a24;color:#f6f2e9;border-radius:99px;padding:9px 16px;font:800 11px var(--disp);letter-spacing:.1em;text-transform:uppercase;box-shadow:3px 3px 0 #ef7952}
-.dots{display:flex;gap:4px}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(246,242,233,.3);transition:background .4s,transform .4s}.dots i.on{background:#ef7952;transform:scale(1.3)}
-.hhint{left:50%;bottom:14px;transform:translateX(-50%);background:rgba(255,255,255,.92);color:#172a24;border-radius:99px;padding:9px 18px;font:700 12px var(--disp);letter-spacing:.03em;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
+.hprog{right:4vw;top:14px;display:flex;align-items:center;gap:12px;background:#141b4d;color:#fff8ec;border-radius:99px;padding:9px 16px;font:800 11px var(--disp);letter-spacing:.1em;text-transform:uppercase;box-shadow:3px 3px 0 #ff6a2b}
+.dots{display:flex;gap:4px}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(246,242,233,.3);transition:background .4s,transform .4s}.dots i.on{background:#ff6a2b;transform:scale(1.3)}
+.hhint{left:50%;bottom:14px;transform:translateX(-50%);background:rgba(255,255,255,.92);color:#141b4d;border-radius:99px;padding:9px 18px;font:700 12px var(--disp);letter-spacing:.03em;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
 .pad{display:none;left:50%;bottom:58px;transform:translateX(-50%);gap:10px}
-.pad button{all:unset;cursor:pointer;background:#172a24;color:#fff;border-radius:99px;padding:14px 22px;font:800 14px var(--disp);box-shadow:3px 3px 0 #ef7952;touch-action:none;user-select:none}
+.pad button{all:unset;cursor:pointer;background:#141b4d;color:#fff;border-radius:99px;padding:14px 22px;font:800 14px var(--disp);box-shadow:3px 3px 0 #ff6a2b;touch-action:none;user-select:none}
 @media(hover:none){.pad{display:flex}.hhint{display:none}}
 @media(max-height:640px){.door{transform:scale(.78)}.emblem{font-size:36px}}
 @media(max-width:700px){.htitle span{display:none}.hprog .dots{display:none}}
@@ -383,8 +383,6 @@ body{overflow:hidden}
 .room .chap{padding-top:20px;min-height:calc(100svh - 70px)}
 .room .finale{padding-top:20px}
 .room footer{position:relative}
-.fl{position:absolute;bottom:-70px;left:var(--x);font-size:var(--s);opacity:.45;animation:rise var(--d) linear var(--dl) infinite}
-@keyframes rise{to{transform:translateY(-125vh) rotate(40deg)}}
 .r1 .deco{background-image:linear-gradient(color-mix(in srgb,var(--ink) 8%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--ink) 8%,transparent) 1px,transparent 1px);background-size:48px 48px}
 .r2 .deco{background:radial-gradient(color-mix(in srgb,var(--accent) 40%,transparent) 2px,transparent 3px) 0 0/34px 34px,linear-gradient(115deg,transparent 46%,color-mix(in srgb,var(--accent) 20%,transparent) 46% 50%,transparent 50%)}
 .r3 .deco{background:repeating-linear-gradient(-30deg,color-mix(in srgb,var(--ink) 9%,transparent) 0 22px,transparent 22px 44px);animation:slide 6s linear infinite}
@@ -394,7 +392,7 @@ body{overflow:hidden}
 @keyframes pulseL{50%{opacity:.55}}
 .r6 .deco{background:radial-gradient(circle at 15% -5%,color-mix(in srgb,var(--accent) 55%,transparent),transparent 38%),radial-gradient(circle at 50% -5%,color-mix(in srgb,#fff 40%,transparent),transparent 38%),radial-gradient(circle at 85% -5%,color-mix(in srgb,var(--accent) 55%,transparent),transparent 38%);animation:pulseL 2.4s ease-in-out infinite}
 .r7 .deco::after{content:"";position:absolute;left:0;right:0;bottom:0;height:24vh;background:conic-gradient(color-mix(in srgb,var(--ink) 16%,transparent) 25%,transparent 0 50%,color-mix(in srgb,var(--ink) 16%,transparent) 0 75%,transparent 0) 0 0/64px 64px}
-.r8 .deco::before,.r8 .deco::after{content:"";position:absolute;left:0;right:0;height:22px;background:repeating-linear-gradient(-45deg,#f2c96d 0 18px,#1a0f0a 18px 36px);animation:tape 1.2s linear infinite;z-index:3}
+.r8 .deco::before,.r8 .deco::after{content:"";position:absolute;left:0;right:0;height:22px;background:repeating-linear-gradient(-45deg,#ffd23f 0 18px,#1a0f0a 18px 36px);animation:tape 1.2s linear infinite;z-index:3}
 .r8 .deco::before{top:0}.r8 .deco::after{bottom:0}
 @keyframes tape{to{background-position:51px 0}}
 .r9 .deco{background:radial-gradient(circle at 15% 105%,color-mix(in srgb,var(--ink) 16%,transparent),transparent 40%),radial-gradient(circle at 70% 110%,color-mix(in srgb,var(--ink) 14%,transparent),transparent 45%);animation:smokeM 7s ease-in-out infinite alternate}
@@ -403,6 +401,38 @@ body{overflow:hidden}
 .r10 .deco::before{content:"";position:absolute;left:50%;bottom:-120px;width:240px;height:240px;margin-left:-120px;border-radius:50%;background:var(--accent);opacity:.3;animation:sunrise 7s ease-out forwards}
 @keyframes sunrise{to{transform:translateY(-52vh)}}
 .rf .deco{background:radial-gradient(color-mix(in srgb,var(--accent) 35%,transparent) 3px,transparent 4px) 0 0/40px 40px}
+
+/* ===== palette + lessons ===== */
+.concept,.tag,.stack .a,.chips li.lit,.mot button:hover{color:var(--acc-ink,#141b4d)}
+.reflect{background:#141b4d;color:#fff8ec;border:2px solid color-mix(in srgb,var(--ink) 30%,transparent)}
+.reflect b{color:#ffd23f}
+.lesson{position:relative;margin-top:22px;max-width:560px;border-radius:18px;padding:16px 18px 16px 74px;background:#141b4d;color:#fff8ec;border:2px solid color-mix(in srgb,var(--ink) 40%,transparent);box-shadow:5px 5px 0 var(--accent)}
+.lesson .st{position:absolute;left:16px;top:16px;width:42px;height:42px;border-radius:50%;background:#ffd23f;color:#141b4d;display:grid;place-items:center;font-size:20px;transform-origin:center}
+.lesson.in .st{animation:spinIn .9s var(--ease) both}
+@keyframes spinIn{from{transform:rotate(-200deg) scale(.2)}to{transform:none}}
+.lesson small{display:block;font:800 10px var(--disp);letter-spacing:.16em;text-transform:uppercase;color:#ffd23f;margin-bottom:4px}
+.lesson b{display:block;font:800 1.2rem/1.12 var(--disp);letter-spacing:-.03em;margin-bottom:5px}
+.text .lesson p{margin:0;font-size:.92rem;line-height:1.5;color:#fff8ec;max-width:none}
+.pb{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:30px 0 56px}
+.pbc{position:relative;border:3px solid var(--ink);border-radius:18px;padding:24px 16px 16px;background:color-mix(in srgb,var(--bg) 88%,#fff);overflow:hidden;box-shadow:5px 5px 0 var(--c)}
+.pbc::before{content:"";position:absolute;left:0;right:0;top:0;height:9px;background:var(--c)}
+.pbc span{font:800 11px var(--disp);letter-spacing:.16em;color:var(--soft)}
+.pbc b{display:block;font:800 1.3rem/1.05 var(--disp);letter-spacing:-.04em;margin:6px 0}
+.pbc p{margin:0;font-size:.88rem;line-height:1.45}
+.rf .quiz .kicker{color:#ffd23f}
+.rf .quiz .btn{background:#ffd23f;color:#141b4d;box-shadow:3px 3px 0 #fff8ec}
+.rf .qdots i.on{background:#ffd23f}
+.toast{position:fixed;left:50%;top:70px;transform:translate(-50%,-30px);opacity:0;z-index:25;background:#ffd23f;color:#141b4d;border:3px solid #141b4d;border-radius:99px;padding:11px 20px;font:800 13px var(--disp);box-shadow:4px 4px 0 #141b4d;pointer-events:none;transition:all .5s cubic-bezier(.2,.9,.2,1);white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+/* stick man: two legs, opposite phase */
+.legL,.legR,.armL,.armR{transform-box:fill-box;transform-origin:0 0}
+.legL{transform:rotate(14deg)}.legR{transform:rotate(-14deg)}
+.armL{transform:rotate(16deg)}.armR{transform:rotate(-16deg)}
+.walking .legL{animation:swing .5s ease-in-out infinite}
+.walking .legR{animation:swing .5s ease-in-out infinite;animation-delay:-.25s}
+.walking .armL{animation:swing .5s ease-in-out infinite;animation-delay:-.25s}
+.walking .armR{animation:swing .5s ease-in-out infinite}
+.walker .legR,.walker .armR{stroke:#4a55b8}
 </style>
 </head>
 <body>
@@ -421,27 +451,30 @@ body{overflow:hidden}
       <button class="prompt" id="prompt" type="button" hidden></button>
       <svg viewBox="0 -8 60 118" width="60" height="118" aria-hidden="true">
         <g class="bob">
-          <line class="legL" x1="30" y1="65" x2="30" y2="102"/><line class="legR" x1="30" y1="65" x2="30" y2="102"/>
+          <path class="ln legR" d="M30 65 L30 102 L39 102"/>
+          <line class="armR" x1="30" y1="38" x2="30" y2="68"/>
           <line x1="30" y1="25" x2="30" y2="65"/>
-          <line class="armL" x1="30" y1="38" x2="30" y2="68"/><line class="armR" x1="30" y1="38" x2="30" y2="68"/>
-          <path d="M21 28 L39 28" class="ln" style="stroke:#ef7952;stroke-width:6"/><path d="M36 30 L42 44" class="ln" style="stroke:#ef7952;stroke-width:5"/>
+          <path class="ln legL" d="M30 65 L30 102 L39 102"/>
+          <line class="armL" x1="30" y1="38" x2="30" y2="68"/>
+          <path d="M21 28 L39 28" class="ln" style="stroke:#ff6a2b;stroke-width:6"/><path d="M36 30 L42 44" class="ln" style="stroke:#ff6a2b;stroke-width:5"/>
           <g class="head">
-            <circle cx="30" cy="14" r="11" fill="#f6f2e9" stroke="#172a24" stroke-width="4"/>
-            <circle cx="34" cy="13" r="1.9" fill="#172a24"/><path d="M29 19 Q34 22 38 18" class="ln" style="stroke-width:2.4"/>
-            <path d="M18 8 Q18 -4 30 -4 Q42 -4 42 8 Z" fill="#ef7952" stroke="#172a24" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="30" cy="14" r="11" fill="#fff8ec" stroke="#141b4d" stroke-width="4"/>
+            <circle cx="34" cy="13" r="1.9" fill="#141b4d"/><path d="M29 19 Q34 22 38 18" class="ln" style="stroke-width:2.4"/>
+            <path d="M18 8 Q18 -4 30 -4 Q42 -4 42 8 Z" fill="#ff6a2b" stroke="#141b4d" stroke-width="3" stroke-linejoin="round"/>
             <line x1="38" y1="8" x2="47" y2="8" style="stroke-width:3.5"/>
           </g>
         </g>
       </svg>
     </div>
   </div>
+  <div class="toast" id="toast" role="status"></div>
   <div class="htitle"><b>Built, not rushed.</b><span>Neil Ratanji · walk the doors</span></div>
-  <div class="hprog" aria-live="polite"><span id="hcount">0 / 11 rooms</span><div class="dots" id="hdots"></div></div>
+  <div class="hprog" aria-live="polite"><span id="hcount">0 / 10 lessons</span><div class="dots" id="hdots"></div></div>
   <div class="hhint" id="hhint">← → or A D to walk · ↑ or Enter to open a door · or tap a door</div>
   <div class="pad" id="pad"><button type="button" data-k="l" aria-label="Walk left">◀</button><button type="button" data-k="e">Enter</button><button type="button" data-k="r" aria-label="Walk right">▶</button></div>
 </div>
 
-<section class="room r1" id="room0" data-theme="#f6f2e9,#172a24,#ef7952" data-fl="💼 ✈️ 🎓" aria-label="Door 1: The detour">
+<section class="room r1" id="room0" data-theme="#fff6e5,#141b4d,#f2551c,#141b4d" aria-label="Door 1: The detour">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 01 · Age 23 · The detour</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap">
@@ -453,6 +486,7 @@ body{overflow:hidden}
         <p class="rv">After graduating from Baylor, Neil had a job lined up at IBM. Before it started he had about six months to fill, so he began working alongside his father and figuring out the hotel business. He never took the IBM job.</p>
         <p class="rv" style="--d:.1s">What hooked him: no limit, no ceiling, just potential. Work hard, and you get to keep all of it.</p>
         <blockquote class="quote rv" style="--d:.2s">“Whatever you get to create, and whatever you get to do, it's yours.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Ownership & upside</b><p>Entrepreneurs trade the safety of a salary for uncapped upside. Neil's draw was that what you build is yours, and so is the responsibility.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -487,7 +521,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r2" id="room1" data-theme="#1d5a45,#f6f2e9,#f2c96d" data-fl="📍 🏨 🏫" aria-label="Door 2: Spot the gap">
+<section class="room r2" id="room1" data-theme="#0b7f75,#fff8ec,#ffd23f,#141b4d" aria-label="Door 2: Spot the gap">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 02 · 2006 · Spot the gap</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap flip">
@@ -499,6 +533,7 @@ body{overflow:hidden}
         <p class="rv">College Station is home to Texas A&amp;M. When Neil's family bought their first location, he noticed there wasn't much there. What existed was dated and old.</p>
         <p class="rv" style="--d:.1s">His read of the market: it needed fresh product. He went on to build one location, then three more.</p>
         <blockquote class="quote rv" style="--d:.2s">“The recognition was the need for fresh product.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Opportunity recognition</b><p>Start with a gap. Where does the product in front of customers lag behind what they would want? Neil saw dated hotels and brought fresh ones.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -526,7 +561,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r3" id="room2" data-theme="#f2c96d,#172a24,#c9441f" data-fl="🐴 ⛰️ 👀" aria-label="Door 3: Horse blinders">
+<section class="room r3" id="room2" data-theme="#ffd23f,#141b4d,#d9232d,#ffffff" aria-label="Door 3: Horse blinders">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 03 · Early career · Horse blinders</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap">
@@ -538,6 +573,7 @@ body{overflow:hidden}
         <p class="rv">Early on, Neil's goal was simple: get as many locations as possible. He didn't know the business would reach where it is today, and he admits that was very much a young guy's problem.</p>
         <p class="rv" style="--d:.1s">He calls it wearing horse blinders. You only see the hill you're climbing, not the mountains behind it.</p>
         <blockquote class="quote rv" style="--d:.2s">“You don't really see past the hill that you're trying to get to.”<small>Neil Ratanji · Interview (paraphrased closely)</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Focus vs. vision</b><p>A narrow goal drives action, but it can hide what comes next. Lift your head: the first hill is not the last.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -571,7 +607,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r4" id="room3" data-theme="#ef7952,#1a0f0a,#f6f2e9" data-fl="🎧 🔥 🤦" aria-label="Door 4: Hot-headed years">
+<section class="room r4" id="room3" data-theme="#ffd6e5,#3d0f2f,#e0246a,#ffffff" aria-label="Door 4: Hot-headed years">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 04 · Early 20s · Hot-headed years</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap flip">
@@ -583,6 +619,7 @@ body{overflow:hidden}
         <p class="rv">Asked how he handled early obstacles, Neil was blunt: like a 23-to-25-year-old who thought he was the hottest thing since sliced bread. That attitude, he says, will really screw you up.</p>
         <p class="rv" style="--d:.1s">One early lesson came from buying a property, thinking he'd fix it up in six months and leave. It didn't work out that way. He failed, and he learned.</p>
         <blockquote class="quote rv" style="--d:.2s">“Humility is a huge thing to have.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Humility & active listening</b><p>Confidence without experience is costly. Neil's fix: listen to people further along, and treat failure as tuition.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -598,7 +635,7 @@ body{overflow:hidden}
         </div>
       </div>
       <div class="viz rv" style="--d:.15s">
-        <h4>Hold to actively listen <span>Plays on its own</span></h4>
+        <h4>Active listening <span>Plays on its own</span></h4>
         <div class="wave" id="wave" aria-hidden="true"></div>
         
         <div class="meter" aria-hidden="true"><i id="lmeter"></i></div>
@@ -611,7 +648,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r5" id="room4" data-theme="#172a24,#f6f2e9,#f2c96d" data-fl="👥 ⭐ 📋" aria-label="Door 5: The 80/20 team">
+<section class="room r5" id="room4" data-theme="#2b2f8f,#fff8ec,#ffd23f,#141b4d" aria-label="Door 5: The 80/20 team">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 05 · Years in · The 80/20 team</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap">
@@ -623,6 +660,7 @@ body{overflow:hidden}
         <p class="rv">Looking back, Neil wishes he'd built better structure around staffing and learned sooner how to treat his employees. It took him a long time. He's been in business since 23, about 19 years.</p>
         <p class="rv" style="--d:.1s">His big idea: 80% of your staff does 20% of the work, and 20% does 80%. Digest that, he says, and “then you're in business.”</p>
         <blockquote class="quote rv" style="--d:.2s">“I do give my 20% preferential treatment.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Team design (80/20)</b><p>A business runs on people. Know who carries the load, build structure around them, and invest in your top 20%.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -651,7 +689,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r6" id="room5" data-theme="#14213d,#f6f2e9,#f2c96d" data-fl="🎤 🤠 🏟️" aria-label="Door 6: Proof it was learned">
+<section class="room r6" id="room5" data-theme="#141b4d,#fff8ec,#ff8a3d,#141b4d" aria-label="Door 6: Proof it was learned">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 06 · ~10 yrs later · Proof it was learned</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap flip">
@@ -663,6 +701,7 @@ body{overflow:hidden}
         <p class="rv">About ten years after the first flip didn't work, Neil bought another property, fixed it up and flipped it in around five and a half months. He did exactly what his younger self had imagined.</p>
         <p class="rv" style="--d:.1s">He wanted it open for a George Strait concert at Kyle Field, when rooms sold for about $1,500 a night. The person who had to sign off said it wouldn't happen in time. A week before the concert, Neil called him in. He signed.</p>
         <blockquote class="quote rv" style="--d:.2s">“No one tells me I can't do something.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Experience compounds</b><p>The same play, a decade later, worked because his judgment had improved. Past failures become assets when you learn from them.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -687,7 +726,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r7" id="room6" data-theme="#b8d9c3,#172a24,#d8502a" data-fl="🛎️ 🧳 📱" aria-label="Door 7: The value is service">
+<section class="room r7" id="room6" data-theme="#bfeaff,#141b4d,#e8470f,#ffffff" aria-label="Door 7: The value is service">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 07 · Today · The value is service</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap">
@@ -699,6 +738,7 @@ body{overflow:hidden}
         <p class="rv">Asked how his business creates value, Neil starts with a good product and good service. But when pressed for the main thing, it's service. A hotel room's a hotel room.</p>
         <p class="rv" style="--d:.1s">He still deals with guests face-to-face, and frontline feedback travels straight to him. It's about how you make them feel.</p>
         <blockquote class="quote rv" style="--d:.2s">“A hotel room's a hotel room.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Value proposition</b><p>Compete on what customers actually feel. A room is a room; service is the difference, so know your guest segments and tailor.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -724,7 +764,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r8" id="room7" data-theme="#a8321f,#f6f2e9,#f2c96d" data-fl="🔨 🏗️ 🔑" aria-label="Door 8: The big risk">
+<section class="room r8" id="room7" data-theme="#d7263d,#fff8ec,#ffd23f,#141b4d" aria-label="Door 8: The big risk">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 08 · 2023 · The big risk</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap flip">
@@ -736,6 +776,7 @@ body{overflow:hidden}
         <p class="rv">As recently as 2023, Neil took on another project: an existing property in town that was headed to auction. He called the agent he knew and had it taken off the market, because the location was the best, with Kyle Field visible from the parking lot.</p>
         <p class="rv" style="--d:.1s">He didn't want the property's brand, so he shut it down, empty for two weeks, while the loan payment kept coming due. Then he gutted it, relaunched it as a Best Western, and it's now his number one location.</p>
         <blockquote class="quote rv" style="--d:.2s">“The bank's not gonna sit back and wait.”<small>Neil Ratanji · Interview (condensed)</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Calculated risk</b><p>Big bets need groundwork: relationships, a clear thesis, and a plan for carrying costs while you rebuild. Risk never disappears; you manage it.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -761,7 +802,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r9" id="room8" data-theme="#3b2a1f,#f6f2e9,#ef7952" data-fl="🍖 ⏳ 💨" aria-label="Door 9: Go slow, go wise">
+<section class="room r9" id="room8" data-theme="#4a2c82,#fff8ec,#ffb347,#141b4d" aria-label="Door 9: Go slow, go wise">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 09 · The lesson · Go slow, go wise</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap">
@@ -773,6 +814,7 @@ body{overflow:hidden}
         <p class="rv">Moving fast, aggressive, with multiple locations (“grow, grow, grow”) can actually hurt you. Neil's analogy: growth in a microwave boils over; smoked low and slow for a day and a half, it comes out amazing.</p>
         <p class="rv" style="--d:.1s">He's turned down many deals his agents brought him, including one he and Krish looked at and passed on immediately. You don't have to keep growing to make money.</p>
         <blockquote class="quote rv" style="--d:.2s">“Go slow, but go wise.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Sustainable growth</b><p>More is not automatically better. Saying no is a strategy: grow at the pace your people and systems can run well.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -799,7 +841,7 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room r10" id="room9" data-theme="#fbe3c4,#172a24,#1d5a45" data-fl="👕 🌴 ☀️" aria-label="Door 10: Freedom">
+<section class="room r10" id="room9" data-theme="#fff0d6,#141b4d,#08887a,#ffffff" aria-label="Door 10: Freedom">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Door 10 · Age 42 · Freedom</span><button class="btn next" type="button">Next door →</button></div>
 <div class="chap flip">
@@ -811,6 +853,7 @@ body{overflow:hidden}
         <p class="rv">Nearly 20 years in, what keeps Neil going is the freedom and lifestyle the business gives him, time with his two boys and his wife, good money, and the people he's met. He wears shorts and a t-shirt to work.</p>
         <p class="rv" style="--d:.1s">He's not even sure he wants a different industry, but he knows he's not stuck in one. Life will happen, and you won't be a 23-year-old chasing it 16 hours a day forever.</p>
         <blockquote class="quote rv" style="--d:.2s">“You're not stuck in one business.”<small>Neil Ratanji · Interview</small></blockquote>
+        <div class="lesson rv"><span class="st" aria-hidden="true">★</span><small>Entrepreneur lesson</small><b>Business by design</b><p>Build the business around the life you want. Structure, people and focus are what buy freedom.</p></div>
         <div class="deep rv">
           <button class="deep-btn" type="button" aria-expanded="false"><span class="lbl">Go deeper</span><span class="pm">+</span></button>
           <div class="deep-panel"><div class="deep-inner"><div class="deep-body">
@@ -844,21 +887,14 @@ body{overflow:hidden}
       </div>
     </div>
   </div></div></section>
-<section class="room rf" id="room10" data-theme="#f6f2e9,#172a24,#ef7952" data-fl="🎓 ✨ 🎉" aria-label="Final door: your turn">
+<section class="room rf" id="room10" data-theme="#fffaf0,#141b4d,#5b3df5,#ffffff" aria-label="Final door: your turn">
 <div class="deco" aria-hidden="true"></div>
 <div class="rscroll"><div class="rbar"><button class="btn back" type="button">← Back to the hallway</button><span class="rname">Final door · Your turn</span><span></span></div>
 <div class="finale">
     <div class="inner">
-      <div class="kicker rv">Lessons · Tap to flip</div>
-      <h2 data-split>Six takeaways.</h2>
-      <div class="flips" id="flips">
-        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">01</span><h3>Own it</h3></div><div class="face back">Whatever you create is yours, and no one can take it unless you give it away.</div></div></button>
-        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">02</span><h3>Spot the gap</h3></div><div class="face back">The need was fresh product in a market full of dated options.</div></div></button>
-        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">03</span><h3>Lift your head</h3></div><div class="face back">Horse blinders hide the mountains behind your hill.</div></div></button>
-        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">04</span><h3>Listen first</h3></div><div class="face back">Humility and active listening beat ego, every time.</div></div></button>
-        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">05</span><h3>Know your 20%</h3></div><div class="face back">A small group carries most of the load. Understand it and invest in them.</div></div></button>
-        <button class="flipc" type="button"><div class="fi"><div class="face"><span class="n">06</span><h3>Go slow, go wise</h3></div><div class="face back">You don't have to keep growing to make money.</div></div></button>
-      </div>
+      <div class="kicker rv">What the doors added up to</div>
+      <h2 data-split>Ten lessons, one playbook.</h2>
+      <div class="pb"><div class="pbc rv" style="--c:#ff6a2b;--d:0.00s"><span>01</span><b>Ownership</b><p>Trade a capped salary for uncapped upside.</p></div><div class="pbc rv" style="--c:#0a8577;--d:0.06s"><span>02</span><b>Opportunity</b><p>Find the gap between what exists and what customers want.</p></div><div class="pbc rv" style="--c:#ffd23f;--d:0.12s"><span>03</span><b>Vision</b><p>Look past the first hill.</p></div><div class="pbc rv" style="--c:#ff4f8b;--d:0.18s"><span>04</span><b>Humility</b><p>Listen to people further along.</p></div><div class="pbc rv" style="--c:#4b3df2;--d:0.24s"><span>05</span><b>Team</b><p>Know your 20% and invest in them.</p></div><div class="pbc rv" style="--c:#7a2bd6;--d:0.30s"><span>06</span><b>Resilience</b><p>Retry old failures with new judgment.</p></div><div class="pbc rv" style="--c:#5fd0ff;--d:0.36s"><span>07</span><b>Value</b><p>Service is the difference.</p></div><div class="pbc rv" style="--c:#e5322d;--d:0.42s"><span>08</span><b>Calculated risk</b><p>Prepare for the carrying costs.</p></div><div class="pbc rv" style="--c:#a0522d;--d:0.48s"><span>09</span><b>Pace</b><p>Go slow, go wise. Learn to say no.</p></div><div class="pbc rv" style="--c:#9be15d;--d:0.54s"><span>10</span><b>Life by design</b><p>Build the business around your life.</p></div></div>
 
       <div class="quiz rv">
         <div class="kicker">Knowledge check</div>
@@ -897,17 +933,17 @@ $$('.count').forEach(el=>whenSeen(el.closest('.viz'),()=>animNum(el,+el.dataset.
 
 /* ================= THE WORLD ================= */
 const D=[
-{t:'The detour',w:'Age 23',c:'#ef7952',tc:'#fff',e:'💼',p:`repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 4px,transparent 4px 18px)`},
-{t:'Spot the gap',w:'2006',c:'#1d5a45',tc:'#fff',e:'📍',p:`repeating-linear-gradient(0deg,transparent 0 22px,rgba(255,255,255,.2) 22px 26px),repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.2) 22px 26px)`},
-{t:'Horse blinders',w:'The early goal',c:'#f2c96d',tc:'#172a24',e:'🐴',p:`repeating-linear-gradient(45deg,rgba(0,0,0,.12) 0 10px,transparent 10px 20px)`},
-{t:'Hot-headed years',w:'Age 23–25',c:'#e0508f',tc:'#fff',e:'🎧',p:`radial-gradient(rgba(255,255,255,.4) 3px,transparent 4px) 0 0/16px 16px`},
-{t:'The 80/20 team',w:'19 years in',c:'#3b4a8c',tc:'#fff',e:'👥',p:`radial-gradient(circle at 50% 30%,rgba(255,255,255,.38) 0 14px,transparent 15px),radial-gradient(circle at 25% 66%,rgba(255,255,255,.26) 0 10px,transparent 11px),radial-gradient(circle at 75% 66%,rgba(255,255,255,.26) 0 10px,transparent 11px)`},
-{t:'Race to the concert',w:'~10 years later',c:'#14213d',tc:'#fff',e:'🤠',p:`radial-gradient(circle at 50% 18%,rgba(255,255,255,.45),transparent 62%)`},
-{t:'A room is a room',w:'Today',c:'#b8d9c3',tc:'#172a24',e:'🛎️',p:`conic-gradient(rgba(0,0,0,.14) 25%,transparent 0 50%,rgba(0,0,0,.14) 0 75%,transparent 0) 0 0/30px 30px`},
-{t:'The 2023 gamble',w:'2023',c:'#a8321f',tc:'#fff',e:'🔨',p:`repeating-linear-gradient(-45deg,rgba(242,201,109,.4) 0 12px,transparent 12px 24px)`},
-{t:'Low & slow',w:'The lesson',c:'#3b2a1f',tc:'#fff',e:'🍖',p:`repeating-linear-gradient(90deg,rgba(0,0,0,.22) 0 2px,transparent 2px 9px)`},
-{t:'Not stuck',w:'Age 42',c:'#fbe3c4',tc:'#172a24',e:'🌅',p:`repeating-conic-gradient(from 0deg at 50% 72%,rgba(239,121,82,.35) 0 8deg,transparent 8deg 20deg)`},
-{t:'Your turn',w:'Lessons + quiz',c:'#8a5cf0',tc:'#fff',e:'🎓',p:`radial-gradient(rgba(255,255,255,.55) 2px,transparent 3px) 0 0/22px 22px`}
+{t:'The detour',w:'Age 23',l:'Ownership',c:'#ff6a2b',tc:'#141b4d',e:'💼',p:`repeating-linear-gradient(90deg,rgba(255,255,255,.25) 0 4px,transparent 4px 18px)`},
+{t:'Spot the gap',w:'2006',l:'Opportunity',c:'#0a8577',tc:'#fff',e:'📍',p:`repeating-linear-gradient(0deg,transparent 0 22px,rgba(255,255,255,.22) 22px 26px),repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.22) 22px 26px)`},
+{t:'Horse blinders',w:'Early goal',l:'Vision',c:'#ffd23f',tc:'#141b4d',e:'🐴',p:`repeating-linear-gradient(45deg,rgba(0,0,0,.12) 0 10px,transparent 10px 20px)`},
+{t:'Hot-headed years',w:'Age 23–25',l:'Humility',c:'#ff4f8b',tc:'#1a0a20',e:'🎧',p:`radial-gradient(rgba(255,255,255,.45) 3px,transparent 4px) 0 0/16px 16px`},
+{t:'The 80/20 team',w:'19 yrs in',l:'Team',c:'#4b3df2',tc:'#fff',e:'👥',p:`radial-gradient(circle at 50% 30%,rgba(255,255,255,.38) 0 14px,transparent 15px),radial-gradient(circle at 25% 66%,rgba(255,255,255,.26) 0 10px,transparent 11px),radial-gradient(circle at 75% 66%,rgba(255,255,255,.26) 0 10px,transparent 11px)`},
+{t:'Race to the concert',w:'10 yrs later',l:'Resilience',c:'#7a2bd6',tc:'#fff',e:'🤠',p:`radial-gradient(circle at 50% 18%,rgba(255,255,255,.45),transparent 62%)`},
+{t:'A room is a room',w:'Today',l:'Value',c:'#5fd0ff',tc:'#141b4d',e:'🛎️',p:`conic-gradient(rgba(0,0,0,.14) 25%,transparent 0 50%,rgba(0,0,0,.14) 0 75%,transparent 0) 0 0/30px 30px`},
+{t:'The 2023 gamble',w:'2023',l:'Calculated risk',c:'#e5322d',tc:'#fff',e:'🔨',p:`repeating-linear-gradient(-45deg,rgba(255,210,63,.45) 0 12px,transparent 12px 24px)`},
+{t:'Low & slow',w:'The lesson',l:'Pace',c:'#a0522d',tc:'#fff',e:'🍖',p:`repeating-linear-gradient(90deg,rgba(0,0,0,.22) 0 2px,transparent 2px 9px)`},
+{t:'Not stuck',w:'Age 42',l:'Life by design',c:'#9be15d',tc:'#141b4d',e:'🌅',p:`repeating-conic-gradient(from 0deg at 50% 72%,rgba(255,255,255,.5) 0 8deg,transparent 8deg 20deg)`},
+{t:'Your turn',w:'The playbook',l:'Quiz',c:'#2f6bff',tc:'#fff',e:'🎓',p:`radial-gradient(rgba(255,255,255,.55) 2px,transparent 3px) 0 0/22px 22px`}
 ];
 const N=D.length,X0=900,GAP=560,WORLD=X0+(N-1)*GAP+700;
 const world=$('#world'),strip=$('#strip'),walker=$('#walker'),prompt=$('#prompt'),far=$('#far'),nearL=$('#nearL'),sunEl=$('#sun'),starsEl=$('#stars');
@@ -917,7 +953,7 @@ const doors=D.map((d,i)=>{
   const b=document.createElement('button');b.type='button';b.className='door';
   b.style.cssText=`left:${X0+i*GAP}px;--c:${d.c};--tc:${d.tc};--pat:${d.p}`;
   b.setAttribute('aria-label',`Door ${i+1}: ${d.t}, ${d.w}`);
-  b.innerHTML=`<span class="emblem" aria-hidden="true">${d.e}</span><span class="sign"><b>${i===N-1?'★':String(i+1).padStart(2,'0')}</b>${d.t}<i>${d.w}</i></span><span class="frame"><span class="panel"><span class="knob"></span></span></span><span class="check" aria-hidden="true">✓</span>`;
+  b.innerHTML=`<span class="emblem" aria-hidden="true">${d.e}</span><span class="sign"><b>${i===N-1?'★':String(i+1).padStart(2,'0')}</b>${d.t}<i>${d.w} · ${d.l}</i></span><span class="frame"><span class="panel"><span class="knob"></span></span></span><span class="check" aria-hidden="true">✓</span>`;
   strip.appendChild(b);
   hdots.appendChild(document.createElement('i'));
   return b;
@@ -931,11 +967,11 @@ for(let i=0;i<N-1;i++){
 function skyline(color,seedv,minH,maxH){let s=seedv;const r=()=>(s=(s*16807)%2147483647)/2147483647;let x=0,p='';
   while(x<1200){const w=40+r()*70,h=minH+r()*(maxH-minH);p+=`<rect x="${x.toFixed(0)}" y="${(300-h).toFixed(0)}" width="${w.toFixed(0)}" height="${h.toFixed(0)}"/>`;x+=w+r()*14}
   return `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='300' fill='${color}'>${p}</svg>`)}")`}
-far.style.backgroundImage=skyline('rgba(23,42,36,.10)',3,70,230);
-nearL.style.backgroundImage=skyline('rgba(23,42,36,.18)',9,40,150);
+far.style.backgroundImage=skyline('rgba(20,27,77,.10)',3,70,230);
+nearL.style.backgroundImage=skyline('rgba(20,27,77,.18)',9,40,150);
 {let s=5;const r=()=>(s=(s*16807)%2147483647)/2147483647;starsEl.style.boxShadow=Array.from({length:60},()=>`${(r()*100).toFixed(1)}vw ${(r()*60).toFixed(1)}vh 0 0 #fff`).join(',')}
 /* sky colours follow the story */
-const stops=[[0,'#ffd9b5','#fdeee0','#ffb347'],[.3,'#8fc9ee','#e6f5fc','#ffd24d'],[.6,'#6fb3e8','#dff1fb','#ffe066'],[.82,'#f08a5d','#ffd7a8','#ff7a45'],[1,'#1b2447','#4a3b6b','#f4f1de']];
+const stops=[[0,'#ffcf9e','#fff1dc','#ffb02e'],[.3,'#6ec6ff','#e9f8ff','#ffd23f'],[.6,'#4aa3ff','#d6efff','#ffd23f'],[.82,'#ff8a5c','#ffd1a1','#ff6a2b'],[1,'#1b1b5e','#5a3d9a','#fff3c4']];
 const lerpC=(a,b,t)=>{const A=hex(a),B=hex(b);return A.map((v,i)=>Math.round(v+(B[i]-v)*t))};
 function setSky(p){
   let i=0;while(i<stops.length-2&&p>stops[i+1][0])i++;
@@ -945,28 +981,23 @@ function setSky(p){
   sunEl.style.left=(6+82*p)+'%';sunEl.style.top=(56-Math.sin(Math.PI*p)*40)+'%';
   starsEl.style.opacity=clamp((p-.78)*5,0,1);
 }
-/* room decorations */
-rooms.forEach(rm=>{
-  const dc=$('.deco',rm),em=(rm.dataset.fl||'').split(' ');
-  for(let i=0;i<9;i++){const f=document.createElement('span');f.className='fl';f.textContent=em[i%em.length];
-    f.style.cssText=`--x:${(i*11+Math.random()*8).toFixed(1)}%;--s:${24+Math.random()*34|0}px;--d:${9+Math.random()*9|0}s;--dl:${-Math.random()*14|0}s`;dc.appendChild(f)}
-});
 
-let x=240,vx=0,camX=0,face=1,target=null,onArrive=null,near=-1,roomOpen=false,openIdx=-1,lastP=-1,walking=false;
+let freshLesson=false,x=240,vx=0,camX=0,face=1,target=null,onArrive=null,near=-1,roomOpen=false,openIdx=-1,lastP=-1,walking=false;
 const keys={l:0,r:0},visited=new Set();
 const SPEED=400;
 
-function updProg(){hcount.textContent=`${visited.size} / ${N} rooms`;$$('i',hdots).forEach((d,i)=>d.classList.toggle('on',visited.has(i)))}
+function updProg(){hcount.textContent=`${[...visited].filter(i=>i<N-1).length} / ${N-1} lessons`;$$('i',hdots).forEach((d,i)=>d.classList.toggle('on',visited.has(i)))}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.remove('on');void el.offsetWidth;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),3200)}
 function openRoom(i){
   if(roomOpen||i<0)return;
   roomOpen=true;openIdx=i;keys.l=keys.r=0;target=null;onArrive=null;
   const door=doors[i];door.classList.add('open','seen');walker.classList.add('in');
-  visited.add(i);updProg();
+  freshLesson=!visited.has(i);visited.add(i);updProg();
   const rm=rooms[i];
   setTimeout(()=>{
     const r=door.getBoundingClientRect();
     rm.style.setProperty('--cx',(r.left+r.width/2)+'px');rm.style.setProperty('--cy',(r.top+r.height*.6)+'px');
-    const [b,k,a]=rm.dataset.theme.split(',');
+    const [b,k,a,ai]=rm.dataset.theme.split(',');rm.style.setProperty('--acc-ink',ai||'#141b4d');
     rm.style.setProperty('--bg',b);rm.style.setProperty('--ink',k);rm.style.setProperty('--accent',a);
     rm.classList.add('show');
     $$('.rv,[data-split]',rm).forEach(el=>{el.classList.remove('in');io.observe(el)});
@@ -980,7 +1011,7 @@ function closeRoom(goNext){
   rm.classList.remove('open');
   setTimeout(()=>{
     rm.classList.remove('show');doors[i].classList.remove('open');walker.classList.remove('in');
-    roomOpen=false;openIdx=-1;
+    roomOpen=false;openIdx=-1;if(freshLesson&&i<N-1)toast('Lesson collected · '+D[i].l);freshLesson=false;
     if(goNext&&i<N-1){target=X0+(i+1)*GAP;onArrive=null}
   },reduce?0:850);
 }
@@ -1240,7 +1271,7 @@ $$('.flipc').forEach(c=>c.onclick=()=>c.classList.toggle('flipped'));
     qT.textContent=`You scored ${score} / ${Q.length}`;
     qO.innerHTML='';qN.textContent='↻ Try again';qN.style.display='';qN.dataset.done='1';
     qF.textContent=score===Q.length?'Perfect. Build with intention, and learn as you go.':'Good start. Scroll back up for anything you want to revisit.';
-    if(score>=3&&!reduce){const cols=['#ef7952','#f2c96d','#1d5a45','#b8d9c3','#172a24'];
+    if(score>=3&&!reduce){const cols=['#ff6a2b','#ffd23f','#1d5a45','#b8d9c3','#141b4d'];
       for(let i=0;i<46;i++){const c=document.createElement('span');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%5];c.style.animationDelay=Math.random()*.8+'s';c.style.animationDuration=2.4+Math.random()*1.6+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),5000)}}
   }
   qN.onclick=()=>{if(qN.dataset.done){qN.dataset.done='';qi=0;score=0;render();return}
